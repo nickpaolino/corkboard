@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { api } from "../services/api";
 import { connect } from "react-redux";
 import * as actions from "../actions/auth";
+import withAuth from "../components/withAuth";
 
 class Login extends Component {
   constructor(props) {
@@ -15,6 +16,10 @@ class Login extends Component {
         password: ""
       }
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
   }
 
   handleChange = e => {
@@ -32,7 +37,7 @@ class Login extends Component {
   };
 
   authenticateUser = () => {
-    this.props.signInUser(this.state.fields);
+    this.props.signInUser(this.state.fields, this.props.history);
   };
 
   render() {
@@ -50,4 +55,4 @@ class Login extends Component {
   }
 }
 
-export default connect(null, actions)(Login);
+export default withAuth(connect(null, actions)(Login));

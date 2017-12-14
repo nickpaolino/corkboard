@@ -27,9 +27,17 @@ const withAuth = WrappedComponent => {
     render() {
       if (this.state.authCompleted) {
         return this.props.loggedIn ? (
-          <WrappedComponent {...this.props} />
+          <div>
+            <WrappedComponent {...this.props} />
+          </div>
         ) : (
-          <Redirect to="/login" />
+          <div>
+            {this.props.history.location.pathname === "/login" ? (
+              <WrappedComponent {...this.props} />
+            ) : (
+              <Redirect to="/login" />
+            )}
+          </div>
         );
       } else {
         return null;
