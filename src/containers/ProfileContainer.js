@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import withAuth from "../components/withAuth";
 import * as actions from "../actions/auth";
 
-class CorkboardContainer extends Component {
+class ProfileContainer extends Component {
   render() {
     return (
       <div>
@@ -24,4 +24,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withAuth(connect(mapStateToProps)(CorkboardContainer));
+export default withAuth(connect(mapStateToProps)(ProfileContainer));

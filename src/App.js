@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Login from "./components/Login";
 import { connect } from "react-redux";
 import { api } from "./services/api";
-import CorkboardContainer from "./containers/CorkboardContainer";
+import ProfileContainer from "./containers/ProfileContainer";
 import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "./actions/auth";
 
@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route exact path="/" component={CorkboardContainer} />} />
+          <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />
         </Switch>
       </div>
