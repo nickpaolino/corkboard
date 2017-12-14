@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { api } from "./services/api";
+import { api } from "../services/api";
+import { connect } from "react-redux";
+import * as actions from "../actions/auth";
 
 class Login extends Component {
   constructor(props) {
@@ -30,14 +32,7 @@ class Login extends Component {
   };
 
   authenticateUser = () => {
-    api.auth.login(this.state.fields).then(res => {
-      if (!res.error) {
-        // If an error is not returned, the login method of the App class is called
-        this.props.handleLogin(res);
-      } else {
-        // Error messages
-      }
-    });
+    this.props.signInUser(this.state.fields);
   };
 
   render() {
@@ -55,4 +50,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, actions)(Login);
