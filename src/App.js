@@ -11,13 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <CorkboardContainer auth={this.props.auth} {...props} />
-            )}
-          />
+          <Route exact path="/" component={CorkboardContainer} />} />
           <Route path="/login" component={Login} />
         </Switch>
       </div>
