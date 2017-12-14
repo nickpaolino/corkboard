@@ -37,7 +37,7 @@ const withAuth = WrappedComponent => {
           </div>
         ) : (
           <div>
-            {isLoginRoute === "/login" ? (
+            {isLoginRoute ? (
               <WrappedComponent {...this.props} />
             ) : (
               <Redirect to="/login" />
