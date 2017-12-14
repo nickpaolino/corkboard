@@ -8,4 +8,4 @@ class UserPortalContainer extends Component {
   }
 }
 
-export default connect()(UserPortalContainer);
+export default UserPortalContainer;

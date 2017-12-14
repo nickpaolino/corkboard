@@ -2,13 +2,20 @@ import React, { Component } from "react";
 import Login from "./components/Login";
 import { connect } from "react-redux";
 import UserPortalContainer from "./containers/UserPortalContainer";
+import { Route, Redirect } from "react-router-dom";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <UserPortalContainer auth={this.props.auth} />
-        <Login handleLogin={this.login} />
+        <Route
+          exact
+          path="/"
+          render={props => (
+            <UserPortalContainer auth={this.props.auth} {...props} />
+          )}
+        />
+        <Route path="/login" component={Login} />
       </div>
     );
   }
