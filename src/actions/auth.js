@@ -12,3 +12,15 @@ export const signInUser = userInfo => {
     });
   };
 };
+
+export const getCurrentUser = token => {
+  return dispatch => {
+    console.log("Getting current user in action creator");
+    api.auth.getUser(token).then(user => {
+      if (!user.message) {
+        // Dispatches update to state with the current user
+        dispatch({ type: "SET_CURRENT_USER", user });
+      }
+    });
+  };
+};

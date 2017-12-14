@@ -1,20 +1,20 @@
 const token = localStorage.getItem("token");
 
-const url = "http://localhost:3000/api/v1/auth";
+const url = "http://localhost:3000/api/v1/";
 
 const headers = {
   "Content-Type": "application/json",
   Accepts: "application/json"
 };
 
-// const headers = {
-//   "Content-Type": "application/json",
-//   Accepts: "application/json",
-//   Authorization: token
-// };
+const getUser = jwt => {
+  return fetch(`${url}current_user`, {
+    headers: { Authorization: jwt }
+  }).then(res => res.json());
+};
 
 const login = body => {
-  return fetch(url, {
+  return fetch(`${url}auth`, {
     method: "POST",
     headers,
     body: JSON.stringify(body)
@@ -23,6 +23,7 @@ const login = body => {
 
 export const api = {
   auth: {
-    login
+    login,
+    getUser
   }
 };
