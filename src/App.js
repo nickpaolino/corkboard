@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
 import { connect } from "react-redux";
+import UserPortalContainer from "./containers/UserPortalContainer";
 
 class App extends Component {
   render() {
-    console.log(this.props);
     return (
       <div className="App">
+        <UserPortalContainer auth={this.props.auth} />
         <Login handleLogin={this.login} />
       </div>
     );
@@ -15,8 +16,10 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.auth.loggedIn,
-    user: state.auth.currentUser
+    auth: {
+      loggedIn: state.auth.loggedIn,
+      user: state.auth.currentUser
+    }
   };
 };
 
