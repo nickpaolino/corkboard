@@ -6,14 +6,21 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      username: "",
-      password: ""
+      user: {},
+      error: false,
+      fields: {
+        username: "",
+        password: ""
+      }
     };
   }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      fields: {
+        ...this.state.fields,
+        [e.target.name]: e.target.value
+      }
     });
   };
 
@@ -23,8 +30,12 @@ class Login extends Component {
   };
 
   authenticateUser = () => {
-    api.auth.login(this.state).then(res => {
-      if (res.error) {
+    api.auth.login(this.state.fields).then(res => {
+      if (!res.error) {
+        // If an error is not returned, the login method of the App class is called
+        this.props.handleLogin(res);
+      } else {
+        // Error messages
       }
     });
   };
