@@ -25,14 +25,19 @@ const withAuth = WrappedComponent => {
     }
 
     render() {
+      const isLoginRoute = this.props.history.location.pathname === "/login";
       if (this.state.authCompleted) {
         return this.props.loggedIn ? (
           <div>
-            <WrappedComponent {...this.props} />
+            {isLoginRoute ? (
+              <Redirect to="/" />
+            ) : (
+              <WrappedComponent {...this.props} />
+            )}
           </div>
         ) : (
           <div>
-            {this.props.history.location.pathname === "/login" ? (
+            {isLoginRoute === "/login" ? (
               <WrappedComponent {...this.props} />
             ) : (
               <Redirect to="/login" />
