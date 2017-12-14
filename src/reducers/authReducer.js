@@ -1,11 +1,9 @@
 const initialState = {
   currentUser: {},
-  loggedIn: false,
-  doneFetching: false
+  loggedIn: false
 };
 
 const authReducer = (state = initialState, action) => {
-  console.log("Setting current user in reducer");
   switch (action.type) {
     case "SET_CURRENT_USER":
       return {
@@ -14,8 +12,7 @@ const authReducer = (state = initialState, action) => {
           id: action.user.id,
           username: action.user.username
         },
-        loggedIn: true,
-        doneFetching: true
+        loggedIn: true
       };
     default:
       return state;

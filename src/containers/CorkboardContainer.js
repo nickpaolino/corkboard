@@ -4,7 +4,7 @@ import withAuth from "../components/withAuth";
 
 class CorkboardContainer extends Component {
   render() {
-    return <div />;
+    return <div>In CorkboardContainer</div>;
   }
 }
 
