@@ -26,11 +26,15 @@ class Navbar extends Component {
           name="home"
           active={activeItem === "home"}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/"
         />
         <Menu.Item
           name="create-new-board"
           active={activeItem === "create-new-board"}
           onClick={this.handleItemClick}
+          as={Link}
+          to="/boards/new"
         />
         <Menu.Menu position="left">
           <Dropdown item text="Your Boards">
