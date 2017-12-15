@@ -19,6 +19,7 @@ class Navbar extends Component {
 
   render() {
     const { activeItem } = this.state;
+    const { loggedIn, user } = this.props;
 
     return (
       <Menu>
@@ -26,6 +27,7 @@ class Navbar extends Component {
           name="home"
           active={activeItem === "home"}
           onClick={this.handleItemClick}
+          disabled={!loggedIn}
           as={Link}
           to="/"
         />
@@ -33,11 +35,12 @@ class Navbar extends Component {
           name="create-new-board"
           active={activeItem === "create-new-board"}
           onClick={this.handleItemClick}
+          disabled={!loggedIn}
           as={Link}
           to="/boards/new"
         />
         <Menu.Menu position="left">
-          <Dropdown item text="Your Boards">
+          <Dropdown disabled={!loggedIn} item text="Your Boards">
             <Dropdown.Menu>
               <Dropdown.Item>Bitcoin</Dropdown.Item>
               <Dropdown.Item>Russia Investigation</Dropdown.Item>
@@ -45,9 +48,9 @@ class Navbar extends Component {
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
-        {this.props.loggedIn ? (
+        {loggedIn ? (
           <Menu.Menu position="right">
-            <Menu.Item>Hi, {this.props.user.username}</Menu.Item>
+            <Menu.Item>Hi, {user.username}</Menu.Item>
             <Menu.Item>
               <Link to="/logout">
                 <Button>Logout</Button>
