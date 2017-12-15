@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as actions from "../actions/auth";
 import { connect } from "react-redux";
+import withAuth from "../components/hocs/withAuth";
 
 class Signup extends Component {
   constructor(props) {
@@ -48,4 +49,4 @@ class Signup extends Component {
   }
 }
 
-export default connect(null, actions)(Signup);
+export default withAuth(connect(null, actions)(Signup));
