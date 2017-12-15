@@ -28,6 +28,7 @@ const withAuth = WrappedComponent => {
       const isLoginOrSignupRoute =
         this.props.history.location.pathname === "/login" ||
         this.props.history.location.pathname === "/signup";
+
       if (this.state.authCompleted) {
         return this.props.loggedIn ? (
           <div>
