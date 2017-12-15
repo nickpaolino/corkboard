@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import * as actions from "../actions/auth";
-import withAuth from "../components/hocs/withAuth";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-class Login extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fields: {
+      // The Rails backend params accepts a nested user object
+      user: {
         username: "",
         password: ""
       }
@@ -18,8 +17,8 @@ class Login extends Component {
 
   handleChange = e => {
     this.setState({
-      fields: {
-        ...this.state.fields,
+      user: {
+        ...this.state.user,
         [e.target.name]: e.target.value
       }
     });
@@ -27,11 +26,11 @@ class Login extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.authenticateUser();
+    this.createUser();
   };
 
-  authenticateUser = () => {
-    this.props.signInUser(this.state.fields, this.props.history);
+  createUser = () => {
+    this.props.createUser(this.state, this.props.history);
   };
 
   render() {
@@ -42,14 +41,11 @@ class Login extends Component {
           <input type="text" name="username" onChange={this.handleChange} />
           Password:{" "}
           <input type="text" name="password" onChange={this.handleChange} />
-          <button>Login</button>
+          <button>Sign Up</button>
         </form>
-        <div>
-          Not a User? <Link to="/signup">Sign Up</Link>
-        </div>
       </div>
     );
   }
 }
 
-export default withAuth(connect(null, actions)(Login));
+export default connect(null, actions)(Signup);

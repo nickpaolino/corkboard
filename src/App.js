@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
+import Signup from "./components/Signup";
 import { connect } from "react-redux";
 import ProfileContainer from "./containers/ProfileContainer";
 import { Route, withRouter, Switch } from "react-router-dom";
@@ -12,6 +13,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
         </Switch>
       </div>
     );

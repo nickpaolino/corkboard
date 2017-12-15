@@ -19,9 +19,18 @@ const login = body => {
   }).then(res => res.json());
 };
 
+const createUser = body => {
+  return fetch(`${url}users`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body)
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
     login,
-    getUser
+    getUser,
+    createUser
   }
 };

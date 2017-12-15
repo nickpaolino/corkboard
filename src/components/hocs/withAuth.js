@@ -11,7 +11,7 @@ const withAuth = WrappedComponent => {
 
     componentDidMount() {
       const token = localStorage.getItem("token");
-      if (token) {
+      if (token && token !== "undefined") {
         this.props.getCurrentUser(token);
       } else {
         this.setState({ authCompleted: true });
