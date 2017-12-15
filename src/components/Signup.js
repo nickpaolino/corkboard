@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as actions from "../actions/auth";
 import { connect } from "react-redux";
 import withAuth from "../components/hocs/withAuth";
+import { Form, Button, Input } from "semantic-ui-react";
 
 class Signup extends Component {
   constructor(props) {
@@ -37,13 +38,26 @@ class Signup extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          Username:{" "}
-          <input type="text" name="username" onChange={this.handleChange} />
-          Password:{" "}
-          <input type="text" name="password" onChange={this.handleChange} />
-          <button>Sign Up</button>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field inline>
+            <label>Username</label>
+            <Input
+              placeholder="Username"
+              name="username"
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field inline>
+            <label>Password</label>
+            <Input
+              placeholder="Password"
+              name="password"
+              type="password"
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Button>Sign Up</Button>
+        </Form>
       </div>
     );
   }

@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import ProfileContainer from "./containers/ProfileContainer";
 import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "./actions/auth";
+import Navbar from "./components/Navbar";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
+        <Navbar />
         <Switch>
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />

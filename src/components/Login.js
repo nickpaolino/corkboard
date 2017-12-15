@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions/auth";
 import withAuth from "../components/hocs/withAuth";
 import { Link } from "react-router-dom";
+import { Form, Button, Input } from "semantic-ui-react";
 
 class Login extends Component {
   constructor(props) {
@@ -37,13 +38,26 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          Username:{" "}
-          <input type="text" name="username" onChange={this.handleChange} />
-          Password:{" "}
-          <input type="text" name="password" onChange={this.handleChange} />
-          <button>Login</button>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field inline>
+            <label>Username</label>
+            <Input
+              placeholder="Username"
+              name="username"
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field inline>
+            <label>Password</label>
+            <Input
+              placeholder="Password"
+              name="password"
+              type="password"
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Button>Login</Button>
+        </Form>
         <div>
           Not a User? <Link to="/signup">Sign Up</Link>
         </div>

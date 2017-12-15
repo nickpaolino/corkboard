@@ -4,14 +4,7 @@ import withAuth from "../components/hocs/withAuth";
 
 class ProfileContainer extends Component {
   render() {
-    return (
-      <div>
-        Hi, {this.props.auth.user.username}
-        <div>
-          <a onClick={this.props.logoutUser}>Logout</a>
-        </div>
-      </div>
-    );
+    return <div />;
   }
 }
 
