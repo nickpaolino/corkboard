@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import Signup from "./components/Signup";
 import { connect } from "react-redux";
 import ProfileContainer from "./containers/ProfileContainer";
@@ -16,6 +17,17 @@ class App extends Component {
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route
+            path="/logout"
+            render={props => {
+              return (
+                <Logout
+                  history={props.history}
+                  logoutUser={this.props.logoutUser}
+                />
+              );
+            }}
+          />
         </Switch>
       </div>
     );

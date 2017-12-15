@@ -40,7 +40,8 @@ export const createUser = (userInfo, history) => {
   };
 };
 
-export const logoutUser = () => {
+export const logoutUser = history => {
   localStorage.removeItem("token");
+  history.push("/login");
   return { type: "LOGOUT_USER" };
 };

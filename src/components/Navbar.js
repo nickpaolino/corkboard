@@ -15,7 +15,7 @@ class Navbar extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu fluid size="small">
+      <Menu>
         <Menu.Item
           name="home"
           active={activeItem === "home"}
@@ -23,7 +23,7 @@ class Navbar extends Component {
         />
         <Menu.Item
           name="Create New Board"
-          active={activeItem === "create new board"}
+          active={activeItem === "create-new-board"}
           onClick={this.handleItemClick}
         />
         <Menu.Menu position="left">
@@ -39,25 +39,21 @@ class Navbar extends Component {
           <Menu.Menu position="right">
             <Menu.Item>Hi, {this.props.user.username}</Menu.Item>
             <Menu.Item>
-              <Button fluid onClick={this.props.logoutUser}>
-                Logout
-              </Button>
+              <Link to="/logout">
+                <Button>Logout</Button>
+              </Link>
             </Menu.Item>
           </Menu.Menu>
         ) : (
           <Menu.Menu position="right">
             <Menu.Item>
               <Link to="/login">
-                <Button fluid size={"small"}>
-                  Login
-                </Button>
+                <Button>Login</Button>
               </Link>
             </Menu.Item>
             <Menu.Item>
               <Link to="/signup">
-                <Button fluid size={"small"}>
-                  Sign Up
-                </Button>
+                <Button>Signup</Button>
               </Link>
             </Menu.Item>
           </Menu.Menu>
@@ -74,4 +70,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Navbar);
+export default connect(mapStateToProps)(Navbar);
