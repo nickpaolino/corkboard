@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { Button, Dropdown, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as actions from "../actions/auth";
 
 class Navbar extends Component {
-  state = { activeItem: "home" };
+  constructor(props) {
+    super(props);
 
-  handleItemClick = (e, { name }) => {
-    this.setState({ activeItem: name });
+    this.state = {
+      activeItem: "home"
+    };
+  }
+
+  handleItemClick = (e, obj) => {
+    // Sets the state with the navbar item that is currently selected
+    this.setState({ activeItem: obj.name });
   };
 
   render() {
@@ -22,7 +28,7 @@ class Navbar extends Component {
           onClick={this.handleItemClick}
         />
         <Menu.Item
-          name="Create New Board"
+          name="create-new-board"
           active={activeItem === "create-new-board"}
           onClick={this.handleItemClick}
         />
