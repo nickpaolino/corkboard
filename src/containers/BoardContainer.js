@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import withAuth from "../components/hocs/withAuth";
 
 class BoardContainer extends Component {
   render() {
-    return <div />;
+    return <div>BOARD CONTAINER</div>;
   }
 }
 
-export default BoardContainer;
+export default withAuth(BoardContainer);
