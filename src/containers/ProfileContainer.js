@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import withAuth from "../components/withAuth";
-import * as actions from "../actions/auth";
+import withAuth from "../components/hocs/withAuth";
 
 class ProfileContainer extends Component {
   render() {

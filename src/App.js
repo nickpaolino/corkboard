@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Login from "./components/Login";
 import { connect } from "react-redux";
-import { api } from "./services/api";
 import ProfileContainer from "./containers/ProfileContainer";
 import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "./actions/auth";

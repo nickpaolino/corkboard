@@ -1,16 +1,13 @@
 import React, { Component } from "react";
-import { api } from "../services/api";
 import { connect } from "react-redux";
 import * as actions from "../actions/auth";
-import withAuth from "../components/withAuth";
+import withAuth from "../components/hocs/withAuth";
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: {},
-      error: false,
       fields: {
         username: "",
         password: ""
