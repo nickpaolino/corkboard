@@ -10,6 +10,11 @@ import * as actions from "./actions/auth";
 import Navbar from "./components/Navbar";
 
 class App extends Component {
+  // This is where a fetch and redux dispatch are called for user's current boards
+  componentWillReceiveProps(nextProps) {
+    this.props.fetchBoards(nextProps.auth.user);
+  }
+
   render() {
     return (
       <div className="App">

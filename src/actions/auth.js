@@ -45,3 +45,31 @@ export const logoutUser = history => {
   history.push("/login");
   return { type: "LOGOUT_USER" };
 };
+
+// Segment this out into another file eventually
+export const fetchBoards = userInfo => {
+  return dispatch => {
+    const token = localStorage.getItem("token");
+    api.boards.fetchBoards(token, userInfo.id).then(user => {
+      console.log(user);
+      // call to services/formatData to reformat data
+      // dispatch({ type: "SET_USER_BOARDS", user });
+    });
+  };
+};
+
+// Data should be reformatted as this
+// [
+//   {
+//     id: 1,
+//     subject: "Bitcoin",
+//     public: true,
+//     admin: false
+//   },
+//   {
+//     id: 2,
+//     subject: "Renaissance Art",
+//     public: true,
+//     admin: true
+//   }
+// ];

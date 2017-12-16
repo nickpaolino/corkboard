@@ -27,10 +27,19 @@ const createUser = body => {
   }).then(res => res.json());
 };
 
+const fetchBoards = (token, id) => {
+  return fetch(`${url}users/${id}`, {
+    headers: { Authorization: token }
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
     login,
     getUser,
     createUser
+  },
+  boards: {
+    fetchBoards
   }
 };
