@@ -21,6 +21,7 @@ class Navbar extends Component {
     const { activeItem } = this.state;
     const { loggedIn, user } = this.props;
 
+    console.log("Rendering with route as ", this.props);
     return (
       <Menu>
         <Menu.Item

@@ -20,6 +20,11 @@ const authReducer = (state = initialState, action) => {
         currentUser: {},
         loggedIn: false
       };
+    case "AUTH_COMPLETED":
+      return {
+        ...state,
+        authCompleted: true
+      };
     default:
       return state;
   }
