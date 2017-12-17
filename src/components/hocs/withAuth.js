@@ -12,8 +12,10 @@ const withAuth = WrappedComponent => {
     componentDidMount() {
       const token = localStorage.getItem("token");
       if (token && token !== "undefined") {
+        // If token exists then get the current user
         this.props.getCurrentUser(token);
       } else {
+        // If the token doesn't exist, then the user isn't logged in
         this.setState({ authCompleted: true });
       }
     }

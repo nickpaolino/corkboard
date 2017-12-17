@@ -17,6 +17,7 @@ export const signInUser = (userInfo, history) => {
 
 export const getCurrentUser = token => {
   return dispatch => {
+    dispatch({ type: "ASYNC_START" });
     api.auth.getUser(token).then(user => {
       if (!user.message) {
         // Dispatches update to state with the current user

@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        {!this.props.auth.isFetching ? <Navbar /> : ""}
         <Switch>
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />
@@ -40,7 +40,8 @@ const mapStateToProps = state => {
   return {
     auth: {
       loggedIn: state.auth.loggedIn,
-      user: state.auth.currentUser
+      user: state.auth.currentUser,
+      isFetching: state.auth.isFetching
     }
   };
 };
