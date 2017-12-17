@@ -4,17 +4,17 @@ import * as actions from "../actions/boards";
 
 class BoardDisplayContainer extends Component {
   componentDidMount() {
-    console.log("Component Did Mount", this.props);
-    // this.props.getBoard(this.props.boardId);
+    this.props.getBoard(this.props.boardId);
   }
+
   componentWillReceiveProps(nextProps) {
-    console.log("Component will receive, current props are", this.props);
-    console.log("Component will receive, next props are", nextProps);
+    if (nextProps.boardId !== this.props.boardId) {
+      this.props.getBoard(nextProps.boardId);
+    }
   }
 
   render() {
-    console.log(this.props.board);
-    return <div>In Board Display Container</div>;
+    return <div>{this.props.board.subject}</div>;
   }
 }
 
