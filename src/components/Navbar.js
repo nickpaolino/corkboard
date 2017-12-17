@@ -17,10 +17,14 @@ class Navbar extends Component {
     this.setState({ activeItem: obj.name });
   };
 
+  handleDropdownClick = e => {
+    this.props.history.push(`/boards/${e.target.id}`);
+  };
+
   render() {
     const { activeItem } = this.state;
     const { loggedIn, user } = this.props;
-    console.log("Rendering Navbar with props", this.props);
+
     return (
       <Menu>
         <Menu.Item
@@ -45,7 +49,11 @@ class Navbar extends Component {
               <Dropdown.Menu>
                 {this.props.user.boards.map(board => {
                   return (
-                    <Dropdown.Item key={board.id}>
+                    <Dropdown.Item
+                      key={board.id}
+                      id={board.id}
+                      onClick={this.handleDropdownClick}
+                    >
                       {board.subject}
                     </Dropdown.Item>
                   );

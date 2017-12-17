@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar history={this.props.history} />
         <Switch>
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />

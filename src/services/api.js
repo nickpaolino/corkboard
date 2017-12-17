@@ -33,6 +33,12 @@ const getAllUsers = jwt => {
   }).then(res => res.json());
 };
 
+const getBoard = (id, jwt) => {
+  return fetch(`${url}boards/${id}`, {
+    headers: { Authorization: jwt }
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
     login,
@@ -41,5 +47,8 @@ export const api = {
   },
   users: {
     getAllUsers
+  },
+  boards: {
+    getBoard
   }
 };
