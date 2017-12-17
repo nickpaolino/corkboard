@@ -41,13 +41,17 @@ class Navbar extends Component {
           to="/boards/new"
         />
         <Menu.Menu position="left">
-          <Dropdown disabled={!loggedIn} item text="Your Boards">
-            <Dropdown.Menu>
-              <Dropdown.Item>Bitcoin</Dropdown.Item>
-              <Dropdown.Item>Russia Investigation</Dropdown.Item>
-              <Dropdown.Item>Climate Change</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          {this.props.user.boards ? (
+            <Dropdown disabled={!loggedIn} item text="Your Boards">
+              <Dropdown.Menu>
+                {this.props.user.boards.map(board => {
+                  return <Dropdown.Item>{board.subject}</Dropdown.Item>;
+                })}
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            ""
+          )}
         </Menu.Menu>
         {loggedIn ? (
           <Menu.Menu position="right">
