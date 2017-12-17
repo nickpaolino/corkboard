@@ -45,7 +45,11 @@ class Navbar extends Component {
             <Dropdown disabled={!loggedIn} item text="Your Boards">
               <Dropdown.Menu>
                 {this.props.user.boards.map(board => {
-                  return <Dropdown.Item>{board.subject}</Dropdown.Item>;
+                  return (
+                    <Dropdown.Item key={board.id}>
+                      {board.subject}
+                    </Dropdown.Item>
+                  );
                 })}
               </Dropdown.Menu>
             </Dropdown>

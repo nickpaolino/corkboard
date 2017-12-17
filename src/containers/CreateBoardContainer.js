@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 class CreateBoardContainer extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class CreateBoardContainer extends Component {
       newSubjectIsDefault: null
     };
   }
+
   handleChange = e => {
     let newState;
 
@@ -27,21 +29,16 @@ class CreateBoardContainer extends Component {
     }
     this.setState(newState);
   };
+
   render() {
-    const subjectOptions = [
-      { key: "Bitcoin", value: "Bitcoin", text: "Bitcoin" },
-      {
-        key: "Russia Investigation",
-        value: "Russia Investigation",
-        text: "Russia Investigation"
-      },
-      {
-        key: "Climate Change",
-        value: "Climate Change",
-        text: "Climate Change"
-      }
-    ];
-    console.log(this.state);
+    const subjectOptions = this.props.subjects.map(subject => {
+      return {
+        key: subject,
+        value: subject,
+        text: subject
+      };
+    });
+
     return (
       <div>
         <h2>Create a Board</h2>
@@ -68,4 +65,10 @@ class CreateBoardContainer extends Component {
   }
 }
 
-export default CreateBoardContainer;
+const mapStateToProps = state => {
+  return {
+    subjects: state.auth.currentUser.subjects
+  };
+};
+
+export default connect(mapStateToProps)(CreateBoardContainer);
