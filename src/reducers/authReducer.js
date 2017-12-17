@@ -18,12 +18,6 @@ const authReducer = (state = initialState, action) => {
         loggedIn: true,
         isFetching: false
       };
-    case "LOGOUT_USER":
-      return {
-        ...state,
-        currentUser: {},
-        loggedIn: false
-      };
     case "SET_USERS":
       // Sets all users except for the current user
       const users = action.users.filter(
