@@ -1,17 +1,10 @@
 const initialState = {
   currentUser: {},
-  loggedIn: false,
-  isFetching: false
+  loggedIn: false
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    // Tells App not to render the navbar until the fetching is done
-    case "ASYNC_START":
-      return {
-        ...state,
-        isFetching: true
-      };
     case "SET_CURRENT_USER":
       return {
         ...state,
