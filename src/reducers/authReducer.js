@@ -10,7 +10,8 @@ const authReducer = (state = initialState, action) => {
         ...state,
         currentUser: {
           id: action.user.id,
-          username: action.user.username
+          username: action.user.username,
+          boards: action.user.boards
         },
         loggedIn: true
       };
