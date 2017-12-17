@@ -14,13 +14,10 @@ class BoardDisplayContainer extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log(this.props.boardId);
-    console.log(nextProps.boardId);
     return this.props.boardId === nextProps.boardId;
   }
 
   render() {
-    console.log(this.props.board);
     return <div>{this.props.board.subject}</div>;
   }
 }

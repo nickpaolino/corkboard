@@ -6,7 +6,6 @@ import BoardDisplayContainer from "./BoardDisplayContainer";
 
 class BoardContainer extends Component {
   render() {
-    console.log("RENDERING BOARD CONTAINER");
     return (
       <div>
         <Switch>
