@@ -1,6 +1,7 @@
 const initialState = {
   currentUser: {},
-  loggedIn: false
+  loggedIn: false,
+  users: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,6 +23,15 @@ const authReducer = (state = initialState, action) => {
         ...state,
         currentUser: {},
         loggedIn: false
+      };
+    case "SET_USERS":
+      // Sets all users except for the current user
+      const users = action.users.filter(
+        user => user.id !== state.currentUser.id
+      );
+      return {
+        ...state,
+        users: users
       };
     default:
       return state;

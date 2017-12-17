@@ -27,9 +27,9 @@ const createUser = body => {
   }).then(res => res.json());
 };
 
-const fetchBoards = (token, id) => {
-  return fetch(`${url}users/${id}`, {
-    headers: { Authorization: token }
+const getAllUsers = jwt => {
+  return fetch(`${url}users`, {
+    headers: { Authorization: jwt }
   }).then(res => res.json());
 };
 
@@ -39,7 +39,7 @@ export const api = {
     getUser,
     createUser
   },
-  boards: {
-    fetchBoards
+  users: {
+    getAllUsers
   }
 };
