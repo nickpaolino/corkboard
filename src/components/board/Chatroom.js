@@ -72,7 +72,7 @@ class Chatroom extends Component {
         user_id: this.props.user.id,
         board_id: this.props.board.id
       })
-    }).then(res => console.log(res));
+    });
   };
 
   componentDidUpdate() {
@@ -151,7 +151,7 @@ class Chatroom extends Component {
             ref={input => (this.textInput = input)}
             onChange={this.handleChange}
           />
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Send" />
         </form>
       </div>
     );

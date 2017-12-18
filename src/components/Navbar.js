@@ -26,7 +26,7 @@ class Navbar extends Component {
     const { loggedIn, user } = this.props;
 
     return (
-      <Menu>
+      <Menu className="navbar">
         <Menu.Item
           name="home"
           active={activeItem === "home"}

@@ -50,7 +50,7 @@ class CreateBoardContainer extends Component {
         <h2>Create a Board</h2>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field inline>
-            <label>Find or Create a Subject: </label>
+            Find or Create a Subject:{" "}
             <Dropdown
               placeholder="Subject"
               search

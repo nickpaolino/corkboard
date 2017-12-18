@@ -5,3 +5,19 @@ body {
   padding: 0;
   font-family: "Ubuntu" !important;
 }
+
+.navbar {
+  font-family: "Ubuntu" !important;
+}
+
+input[type="text"] {
+  font-family: "Ubuntu" !important;
+}
+
+button {
+  font-family: "Ubuntu" !important;
+}
+
+input[type="password"] {
+  font-family: "Ubuntu" !important;
+}
