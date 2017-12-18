@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../actions/boards";
+import Chatroom from "../components/board/Chatroom";
 
 class BoardDisplayContainer extends Component {
   componentDidMount() {
@@ -19,13 +20,23 @@ class BoardDisplayContainer extends Component {
 
   render() {
     console.log(this.props);
-    return <div>{this.props.board.subject}</div>;
+    return (
+      <div>
+        {this.props.board.subject}
+        {this.props.board.id ? (
+          <Chatroom boardId={this.props.board.id} user={this.props.user} />
+        ) : (
+          ""
+        )}
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    board: state.board.currentBoard
+    board: state.board.currentBoard,
+    user: state.auth.currentUser
   };
 };
 
