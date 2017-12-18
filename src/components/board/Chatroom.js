@@ -18,6 +18,7 @@ class Chatroom extends Component {
   }
 
   componentDidMount() {
+    this.scrollToBot();
     this.fetchPreviousMessages(this.props.board.id);
     this.subscribeChannel(this.props.board.id);
   }
@@ -73,6 +74,16 @@ class Chatroom extends Component {
       })
     }).then(res => console.log(res));
   };
+
+  componentDidUpdate() {
+    this.scrollToBot();
+  }
+
+  scrollToBot() {
+    ReactDOM.findDOMNode(this.refs.chats).scrollTop = ReactDOM.findDOMNode(
+      this.refs.chats
+    ).scrollHeight;
+  }
 
   subscribeChannel = channel => {
     const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
@@ -131,13 +142,7 @@ class Chatroom extends Component {
         <h3>{this.props.board.subject}</h3>
         <ul className="chats" ref="chats">
           {this.state.chats.map((chat, index) => (
-            <div>
-              <Message
-                key={index}
-                chat={chat}
-                user={this.props.user.username}
-              />
-            </div>
+            <Message key={index} chat={chat} user={this.props.user.username} />
           ))}
         </ul>
         <form className="input" onSubmit={e => this.submitMessage(e)}>
