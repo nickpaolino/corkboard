@@ -21,9 +21,8 @@ class BoardDisplayContainer extends Component {
   render() {
     return (
       <div>
-        {this.props.board.subject}
         {parseInt(this.props.board.id) === parseInt(this.props.boardId) ? (
-          <Chatroom boardId={this.props.board.id} user={this.props.user} />
+          <Chatroom board={this.props.board} user={this.props.user} />
         ) : (
           ""
         )}

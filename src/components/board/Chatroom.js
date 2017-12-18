@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import ActionCable from "actioncable";
+import Message from "./Message";
+import ReactDOM from "react-dom";
+import "../../Chatroom.css";
 
 class Chatroom extends Component {
   constructor(props) {
@@ -9,21 +12,50 @@ class Chatroom extends Component {
       chats: [],
       value: "",
       channelCable: {},
-      channelSubscribed: true
+      channelSubscribed: true,
+      chats: []
     };
   }
 
   componentDidMount() {
-    // this.fetchPreviousMessages();
-    this.subscribeChannel(this.props.boardId);
+    this.fetchPreviousMessages(this.props.board.id);
+    this.subscribeChannel(this.props.board.id);
   }
 
   addChat(chat) {
-    this.state.chats.push(chat);
     this.setState({
-      chats: this.state.chats
+      chats: [
+        ...this.state.chats,
+        {
+          content: chat.content,
+          username: chat.username
+        }
+      ]
     });
   }
+
+  formatMessages = json => {
+    const messages = json.map(message => {
+      return {
+        content: message.content,
+        username: message.username
+      };
+    });
+    this.setState({
+      chats: messages
+    });
+  };
+
+  fetchPreviousMessages = boardId => {
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:3000/api/v1/messages/${boardId}`, {
+      headers: {
+        Authorization: token
+      }
+    })
+      .then(res => res.json())
+      .then(json => this.formatMessages(json));
+  };
 
   postMessage = () => {
     const token = localStorage.getItem("token");
@@ -37,7 +69,7 @@ class Chatroom extends Component {
       body: JSON.stringify({
         content: this.state.value,
         user_id: this.props.user.id,
-        board_id: this.props.boardId
+        board_id: this.props.board.id
       })
     }).then(res => console.log(res));
   };
@@ -51,9 +83,8 @@ class Chatroom extends Component {
       },
       {
         received: data => {
-          const text = data.username + ": " + data.content;
           this.setState({ channelSubscribed: true });
-          this.addChat(text);
+          this.addChat(data);
         }
       }
     );
@@ -62,41 +93,54 @@ class Chatroom extends Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    // Only subscribe to the channel if it hasn't already been subscribed OR the channel id has changed
+
+    const channelIdChanged = this.props.board.id !== nextProps.board.id;
+
+    if (!this.state.channelSubscribed || channelIdChanged) {
+      this.fetchPreviousMessages(nextProps.board.id);
+      if (this.state.channelCable.consumer) {
+        this.state.channelCable.unsubscribe();
+      }
+      this.subscribeChannel(nextProps.board.id);
+    }
+  }
+
+  submitMessage = e => {
+    e.preventDefault();
+    const chat = {
+      content: this.textInput.value,
+      username: this.props.user.username
+    };
+
+    this.postMessage();
+
+    this.textInput.value = "";
+  };
+
   handleChange = e => {
     this.setState({
       value: e.target.value
     });
   };
 
-  componentWillReceiveProps(nextProps) {
-    // Only subscribe to the channel if it hasn't already been subscribed OR the channel id has changed
-
-    const channelIdChanged = this.props.boardId !== nextProps.boardId;
-
-    if (!this.state.channelSubscribed || channelIdChanged) {
-      if (this.state.channelCable.consumer) {
-        this.state.channelCable.unsubscribe();
-      }
-      this.subscribeChannel(nextProps.boardId);
-    }
-  }
-
   render() {
     return (
-      <div>
-        {this.state.chats.map((chat, index) => {
-          return <p key={index}>{chat}</p>;
-        })}
-        <form>
-          <input onChange={this.handleChange} type="text" />
-          <button
-            onClick={e => {
-              e.preventDefault();
-              this.postMessage();
-            }}
-          >
-            Post
-          </button>
+      <div className="chatroom">
+        <h3>{this.props.board.subject}</h3>
+        <ul className="chats" ref="chats">
+          {this.state.chats.map((chat, index) => (
+            <Message key={index} chat={chat} user={this.props.user.username} />
+          ))}
+        </ul>
+        <form className="input" onSubmit={e => this.submitMessage(e)}>
+          <input
+            type="text"
+            ref={input => (this.textInput = input)}
+            onChange={this.handleChange}
+          />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     );
