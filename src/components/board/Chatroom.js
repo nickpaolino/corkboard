@@ -7,12 +7,15 @@ class Chatroom extends Component {
 
     this.state = {
       chats: [],
-      value: ""
+      value: "",
+      channelSubscribed: false
     };
   }
 
   componentDidMount() {
-    this.subscribeChannel();
+    // this.fetchPreviousMessages();
+    // Have to change channels when the component isn't mounting again
+    this.subscribeChannel(this.props.boardId);
   }
 
   addChat(chat) {
@@ -39,17 +42,18 @@ class Chatroom extends Component {
     }).then(res => console.log(res));
   };
 
-  subscribeChannel = () => {
+  subscribeChannel = channel => {
+    console.log("subscribing to channel #", channel);
     const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
     cable.subscriptions.create(
       {
         channel: `RoomChannel`,
-        room: this.props.boardId
+        room: channel
       },
       {
         received: data => {
           const text = data.username + ": " + data.content;
-          console.log(data);
+          this.setState({ channelSubscribed: true });
           this.addChat(text);
         }
       }
@@ -62,7 +66,22 @@ class Chatroom extends Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.subscribeChannel(nextProps.boardId);
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (
+  //     this.props.boardId !== nextProps.boardId ||
+  //     this.state.chats.length !== nextState.chats.length
+  //   );
+  // }
+
   render() {
+    // console.log(this.state.channelSubscribed);
+    // {
+    //   this.state.channelSubscribed ? "" : this.subscribeChannel();
+    // }
     return (
       <div>
         {this.state.chats.map((chat, index) => {
