@@ -19,10 +19,11 @@ class BoardDisplayContainer extends Component {
   }
 
   render() {
+    console.log("Rendering with props", this.props);
     return (
       <div>
         {this.props.board.subject}
-        {this.props.board.id ? (
+        {parseInt(this.props.board.id) === parseInt(this.props.boardId) ? (
           <Chatroom boardId={this.props.board.id} user={this.props.user} />
         ) : (
           ""

@@ -8,13 +8,15 @@ class Chatroom extends Component {
     this.state = {
       chats: [],
       value: "",
-      channelSubscribed: false
+      channelCable: {},
+      channelSubscribed: true
     };
   }
 
   componentDidMount() {
+    console.log(this.props.boardId);
+
     // this.fetchPreviousMessages();
-    // Have to change channels when the component isn't mounting again
     this.subscribeChannel(this.props.boardId);
   }
 
@@ -43,9 +45,8 @@ class Chatroom extends Component {
   };
 
   subscribeChannel = channel => {
-    console.log("subscribing to channel #", channel);
     const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
-    cable.subscriptions.create(
+    const channelSubscription = cable.subscriptions.create(
       {
         channel: `RoomChannel`,
         room: channel
@@ -58,6 +59,9 @@ class Chatroom extends Component {
         }
       }
     );
+    this.setState({
+      channelCable: channelSubscription
+    });
   };
 
   handleChange = e => {
@@ -67,21 +71,19 @@ class Chatroom extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    this.subscribeChannel(nextProps.boardId);
+    // Only subscribe to the channel if it hasn't already been subscribed OR the channel id has changed
+
+    const channelIdChanged = this.props.boardId !== nextProps.boardId;
+
+    if (!this.state.channelSubscribed || channelIdChanged) {
+      if (this.state.channelCable.consumer) {
+        this.state.channelCable.unsubscribe();
+      }
+      this.subscribeChannel(nextProps.boardId);
+    }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return (
-  //     this.props.boardId !== nextProps.boardId ||
-  //     this.state.chats.length !== nextState.chats.length
-  //   );
-  // }
-
   render() {
-    // console.log(this.state.channelSubscribed);
-    // {
-    //   this.state.channelSubscribed ? "" : this.subscribeChannel();
-    // }
     return (
       <div>
         {this.state.chats.map((chat, index) => {
