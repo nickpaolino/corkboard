@@ -14,8 +14,6 @@ class Chatroom extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.boardId);
-
     // this.fetchPreviousMessages();
     this.subscribeChannel(this.props.boardId);
   }

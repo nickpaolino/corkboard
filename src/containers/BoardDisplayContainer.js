@@ -19,7 +19,6 @@ class BoardDisplayContainer extends Component {
   }
 
   render() {
-    console.log("Rendering with props", this.props);
     return (
       <div>
         {this.props.board.subject}

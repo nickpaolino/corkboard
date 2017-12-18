@@ -45,7 +45,6 @@ class CreateBoardContainer extends Component {
       };
     });
 
-    console.log(this.props);
     return (
       <div>
         <h2>Create a Board</h2>
