@@ -131,7 +131,13 @@ class Chatroom extends Component {
         <h3>{this.props.board.subject}</h3>
         <ul className="chats" ref="chats">
           {this.state.chats.map((chat, index) => (
-            <Message key={index} chat={chat} user={this.props.user.username} />
+            <div>
+              <Message
+                key={index}
+                chat={chat}
+                user={this.props.user.username}
+              />
+            </div>
           ))}
         </ul>
         <form className="input" onSubmit={e => this.submitMessage(e)}>

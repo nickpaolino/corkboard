@@ -38,8 +38,27 @@
   list-style: none;
   float: left;
   clear: both;
-  margin: 10px 0;
+  margin: 10px 0 3px;
   max-width: 200px;
+}
+
+.chatroom .chats .chat_label {
+  position: relative;
+  border-radius: 10px;
+  list-style: none;
+  float: left;
+  clear: both;
+  max-width: 200px;
+}
+
+.chatroom .chats .chat_label.right {
+  float: right;
+  clear: both;
+}
+
+.chatroom .chats .chat_label a {
+  text-decoration: none;
+  color: #3498db;
 }
 
 .chatroom .chats .chat img {
@@ -99,5 +118,10 @@
 
 .chatroom .input input[type="submit"]:hover {
   background: #1ee494;
+  color: #fff;
+}
+
+.user {
+  font-size: 10px;
   color: #fff;
 }
