@@ -11,22 +11,43 @@ class CreateBoardContainer extends Component {
     this.state = {
       existingSubject: "",
       newSubject: "",
-      newSubjectIsDefault: null
+      newSubjectIsDefault: null,
+      subjectOptions: []
     };
   }
 
   componentDidMount = () => {
     // Fetch all users
     this.props.getUsers();
+
+    const subjectOptions = this.props.subjects.map(subject => {
+      return {
+        key: subject,
+        value: subject,
+        text: subject
+      };
+    });
+
+    this.setState({ subjectOptions });
   };
 
   handleChange = e => {
     let newState;
 
     if (!!e.target.value) {
+      // the new subject is temporarily added to the dropdown
+      const newSubjects = [
+        ...this.state.subjectOptions,
+        {
+          key: e.target.value,
+          value: e.target.value,
+          text: e.target.value
+        }
+      ];
       newState = {
         newSubject: e.target.value,
-        newSubjectIsDefault: true
+        newSubjectIsDefault: true,
+        subjectOptions: newSubjects
       };
     } else {
       newState = {
@@ -38,17 +59,10 @@ class CreateBoardContainer extends Component {
   };
 
   render() {
-    const subjectOptions = this.props.subjects.map(subject => {
-      return {
-        key: subject,
-        value: subject,
-        text: subject
-      };
-    });
-
+    const { subjectOptions } = this.state;
     return (
       <div className="new board">
-        <h2>Create a Board</h2>
+        <h3>Create a Board</h3>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field inline>
             Find or Create a Subject:{" "}
@@ -58,11 +72,11 @@ class CreateBoardContainer extends Component {
               selection
               additionPosition="top"
               allowAdditions
-              options={subjectOptions}
+              options={this.state.subjectOptions}
               onChange={this.handleChange}
-            />
+            />{" "}
           </Form.Field>
-          <UserList />
+          <UserList users={this.props.users} />
           <div className="checkbox">
             <Form.Field inline>
               <Checkbox
