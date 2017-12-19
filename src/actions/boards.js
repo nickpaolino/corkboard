@@ -9,3 +9,13 @@ export const getBoard = (id, history) => {
     });
   };
 };
+
+export const createBoard = board => {
+  const token = localStorage.getItem("token");
+  return dispatch => {
+    api.boards.createBoard(board, token).then(board => {
+      console.log(board);
+      // dispatch({ type: "GET_CURRENT_BOARD", board });
+    });
+  };
+};

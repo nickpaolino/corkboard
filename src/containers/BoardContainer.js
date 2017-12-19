@@ -18,7 +18,12 @@ class BoardContainer extends Component {
     return (
       <div>
         <Switch>
-          <Route path="/boards/new" component={CreateBoardContainer} />
+          <Route
+            path="/boards/new"
+            render={props => {
+              return <CreateBoardContainer {...props} />;
+            }}
+          />
           <Route
             path="/boards/:id"
             render={props => {

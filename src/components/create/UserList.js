@@ -31,11 +31,15 @@ class UserList extends Component {
     this.setState({ value: obj.value });
   };
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.value.length !== prevState.value.length) {
+      this.props.addUser(this.state.value);
+    }
+  }
+
   handleSearchChange = (e, obj) => {
     this.setState({ searchQuery: obj.searchQuery });
   };
-
-  toggleSearch = e => this.setState({ search: e.target.checked });
 
   render() {
     const { multiple, options, search, value } = this.state;
@@ -49,7 +53,6 @@ class UserList extends Component {
             multiple={multiple}
             search={search}
             options={options}
-            value={value}
             placeholder="Add Users"
             onChange={this.handleChange}
             onSearchChange={this.handleSearchChange}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
-import * as actions from "../actions/users";
+import * as actions from "../actions";
 import UserList from "../components/create/UserList";
 
 class CreateBoardContainer extends Component {
@@ -12,7 +12,9 @@ class CreateBoardContainer extends Component {
       existingSubject: "",
       newSubject: "",
       newSubjectIsDefault: null,
-      subjectOptions: []
+      subjectOptions: [],
+      users: [],
+      isPublic: true
     };
   }
 
@@ -29,6 +31,10 @@ class CreateBoardContainer extends Component {
     });
 
     this.setState({ subjectOptions });
+  };
+
+  addUser = users => {
+    this.setState({ users });
   };
 
   handleChange = e => {
@@ -58,11 +64,36 @@ class CreateBoardContainer extends Component {
     this.setState(newState);
   };
 
+  handleCheck = (e, { checked }) => {
+    this.setState({ isPublic: checked });
+  };
+
+  handleSubmit = () => {
+    const subject = this.state.newSubjectIsDefault
+      ? this.state.newSubject
+      : this.state.existingSubject;
+
+    const { isPublic, users } = this.state;
+
+    users.push(this.props.currentUser.username);
+
+    const body = {
+      subject,
+      isPublic,
+      users
+    };
+
+    const { history } = this.props;
+    console.log(history);
+    // Create board
+    this.props.createBoard(body, history);
+  };
+
   render() {
     const { subjectOptions } = this.state;
     return (
       <div className="new board">
-        <h3>Create a Board</h3>
+        <h2>Create a Board</h2>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field inline>
             Find or Create a Subject:{" "}
@@ -76,12 +107,13 @@ class CreateBoardContainer extends Component {
               onChange={this.handleChange}
             />{" "}
           </Form.Field>
-          <UserList users={this.props.users} />
+          <UserList users={this.props.users} addUser={this.addUser} />
           <div className="checkbox">
             <Form.Field inline>
               <Checkbox
                 label="This board is open to the public"
                 defaultChecked
+                onChange={this.handleCheck}
               />
             </Form.Field>
           </div>
@@ -95,7 +127,8 @@ class CreateBoardContainer extends Component {
 const mapStateToProps = state => {
   return {
     subjects: state.auth.currentUser.subjects,
-    users: state.auth.users
+    users: state.auth.users,
+    currentUser: state.auth.currentUser
   };
 };
 
