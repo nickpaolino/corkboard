@@ -17,7 +17,11 @@ class BoardDisplayContainer extends Component {
         ) : (
           ""
         )}
-        <BulletinContainer />
+        {this.props.board.id ? (
+          <BulletinContainer board={this.props.board} />
+        ) : (
+          ""
+        )}
       </div>
     );
   }

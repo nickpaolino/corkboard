@@ -5,7 +5,9 @@ class BulletinContainer extends Component {
   render() {
     return (
       <div className="bulletin">
-        <h3>Bitcoin Resources</h3>
+        <h3>{this.props.board.subject} Resources</h3>
+        <div className="board" />
+        <div className="menu" />
       </div>
     );
   }

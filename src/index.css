@@ -6,9 +6,12 @@ body {
   font-family: "Ubuntu" !important;
 }
 
-.navbar {
+/*.navbar {
   font-family: "Ubuntu" !important;
-}
+  background-color: rgba(228, 168, 29, 0.7) !important;
+  border-radius: 5px !important;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3) !important;
+}*/
 
 input[type="text"] {
   font-family: "Ubuntu" !important;
