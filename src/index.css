@@ -28,3 +28,12 @@ input[type="password"] {
 .board.container {
   display: flex;
 }
+
+.checkbox {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.new.board {
+  margin-left: 2%;
+}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions/users";
+import UserList from "../components/create/UserList";
 
 class CreateBoardContainer extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class CreateBoardContainer extends Component {
     });
 
     return (
-      <div>
+      <div className="new board">
         <h2>Create a Board</h2>
         <Form onSubmit={this.handleSubmit}>
           <Form.Field inline>
@@ -61,9 +62,15 @@ class CreateBoardContainer extends Component {
               onChange={this.handleChange}
             />
           </Form.Field>
-          <Form.Field inline>
-            <Checkbox label="This board is open to the public" defaultChecked />
-          </Form.Field>
+          <UserList />
+          <div className="checkbox">
+            <Form.Field inline>
+              <Checkbox
+                label="This board is open to the public"
+                defaultChecked
+              />
+            </Form.Field>
+          </div>
           <Button>Create</Button>
         </Form>
       </div>
