@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Dropdown, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import * as actions from "../actions/boards";
 
 class Navbar extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Navbar extends Component {
   };
 
   handleDropdownClick = e => {
-    this.props.history.push(`/boards/${e.target.id}`);
+    this.props.getBoard(e.target.id, this.props.history);
   };
 
   render() {
@@ -99,4 +100,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, actions)(Navbar);

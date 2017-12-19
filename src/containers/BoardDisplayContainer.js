@@ -5,17 +5,7 @@ import Chatroom from "../components/board/Chatroom";
 
 class BoardDisplayContainer extends Component {
   componentDidMount() {
-    this.props.getBoard(this.props.boardId);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.boardId !== this.props.boardId) {
-      this.props.getBoard(nextProps.boardId);
-    }
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.boardId === nextProps.boardId;
+    if (!this.props.board.id) this.props.getBoard(this.props.boardId);
   }
 
   render() {
