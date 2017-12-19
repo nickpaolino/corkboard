@@ -9,9 +9,10 @@ class BoardDisplayContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <div>
-        {parseInt(this.props.board.id) === parseInt(this.props.boardId) ? (
+        {this.props.board.id ? (
           <Chatroom board={this.props.board} user={this.props.user} />
         ) : (
           ""
