@@ -57,10 +57,9 @@ export const getBoard = (id, history) => {
 };
 
 export const createBoard = (board, history) => {
-  const token = localStorage.getItem("token");
   return dispatch => {
-    api.boards.createBoard(board, token).then(board => {
-      console.log(board);
+    api.boards.createBoard(board).then(board => {
+      dispatch({ type: "GET_CURRENT_BOARD", board });
       history.push(`/boards/${board.id}`);
     });
   };

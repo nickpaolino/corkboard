@@ -3,6 +3,8 @@ import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import UserList from "../components/create/UserList";
+import { Redirect } from "react-router-dom";
+import { api } from "../services/api";
 
 class CreateBoardContainer extends Component {
   constructor(props) {
@@ -79,14 +81,11 @@ class CreateBoardContainer extends Component {
 
     const body = {
       subject,
-      isPublic,
+      public: isPublic,
       users
     };
-
-    const { history } = this.props;
-    console.log(history);
     // Create board
-    this.props.createBoard(body, history);
+    this.props.createBoard(body, this.props.history);
   };
 
   render() {

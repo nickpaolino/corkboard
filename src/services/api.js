@@ -39,7 +39,8 @@ const getBoard = (id, jwt) => {
   }).then(res => res.json());
 };
 
-const createBoard = (body, jwt) => {
+const createBoard = body => {
+  const jwt = localStorage.getItem("token");
   return fetch(`${url}boards`, {
     method: "POST",
     headers: { ...headers, Authorization: jwt },
