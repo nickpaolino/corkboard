@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
 
 .chatroom {
-  width: 450px;
+  width: 400px;
   height: 450px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
@@ -99,7 +99,7 @@
   border-bottom-left-radius: 5px;
   margin-left: 10px;
   height: 30px;
-  width: 310px;
+  width: 260px;
   box-sizing: border-box;
   font-size: 14px;
 }

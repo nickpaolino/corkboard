@@ -1,0 +1,24 @@
+.bulletin {
+  width: 675px;
+  height: 450px;
+  background-color: rgba(0, 0, 0, 0.7);
+  margin-left: auto;
+  border-radius: 5px;
+  overflow: hidden;
+  float: right;
+  margin-right: 2%;
+  position: relative;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.bulletin h3 {
+  font-family: "Ubuntu";
+  background-color: rgba(228, 168, 29, 0.7);
+  color: #fff;
+  margin: 0;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

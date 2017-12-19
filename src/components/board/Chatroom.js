@@ -136,7 +136,7 @@ class Chatroom extends Component {
   render() {
     return (
       <div className="chatroom">
-        <h3>{this.props.board.subject}</h3>
+        <h3>Chat about {this.props.board.subject}</h3>
         <ul className="chats" ref={ul => (this.chats = ul)}>
           {this.state.chats.map((chat, index) => (
             <Message key={index} chat={chat} user={this.props.user.username} />
