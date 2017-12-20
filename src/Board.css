@@ -1,13 +1,7 @@
-div.board,
-div#react-container {
-  height: 100%;
-  overflow: hidden;
-}
-
 div.note {
   height: 150px;
   width: 150px;
-  background-color: yellow;
+  background-color: rgba(228, 168, 29, 0.7);
   margin: 2px 0;
   position: absolute;
   cursor: -webkit-grab;
@@ -48,8 +42,5 @@ div.note > textarea {
 }
 
 .board > button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  font-size: 1.5em;
+  font-size: 20px;
 }

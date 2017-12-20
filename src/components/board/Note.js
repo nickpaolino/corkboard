@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import "../../Board.css";
-
 import Draggable from "react-draggable";
+import "../../Board.css";
 
 class Note extends Component {
   componentDidMount() {
@@ -19,9 +18,7 @@ class Note extends Component {
     return (
       <div>
         <Draggable>
-          <div className="note" style={this.style}>
-            <p>Note</p>
-          </div>
+          <div className="note" style={this.style} />
         </Draggable>
       </div>
     );
