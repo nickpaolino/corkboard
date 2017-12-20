@@ -80,7 +80,7 @@ class Note extends Component {
           style={this.style}
         >
           <Icon onClick={this.handleDelete} name="delete" />
-          {this.props.text}
+          {this.props.id}
         </div>
       </Draggable>
     );
