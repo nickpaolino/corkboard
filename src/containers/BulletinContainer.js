@@ -24,7 +24,9 @@ class BulletinContainer extends Component {
         <h3>{this.props.board.subject} Resources</h3>
         <Board notes={this.state.notes} />
         <div className="menu">
-          <button onClick={this.add}>+</button>
+          <button className="add" onClick={this.add}>
+            +
+          </button>
         </div>
       </div>
     );
