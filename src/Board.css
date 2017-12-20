@@ -1,23 +1,23 @@
+.board {
+  position: relative;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+
 div.note {
   height: 150px;
   width: 150px;
   background-color: rgba(228, 168, 29, 0.7);
   margin: 2px 0;
   position: absolute;
-  cursor: -webkit-grab;
   box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.2);
   overflow: hidden;
-}
-
-div.note:active {
-  cursor: -webkit-grabbing;
 }
 
 div.note p {
   margin: 0;
   font-size: 22px;
   padding: 5px;
-  font-family: "Shadows Into Light", Arial;
 }
 
 div.note:hover > span {
@@ -26,21 +26,10 @@ div.note:hover > span {
 
 div.note > span {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
   opacity: 0;
   transition: opacity 0.25s linear;
 }
 
 div.note button {
   margin: 2px;
-}
-
-div.note > textarea {
-  height: 75%;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.board > button {
-  font-size: 20px;
 }

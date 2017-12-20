@@ -4,23 +4,32 @@ import "../../Board.css";
 
 class Note extends Component {
   componentDidMount() {
+    // bottom right - left: "75%", top: "55%"
+    // bottom left - left: "2%", top: "55%"
+    // bottom left - left: "2%", top: "0%"
+    // bottom left - left: "75%", top: "0%"
+
     this.style = {
-      right: this.randomBetween(0, window.innerWidth - 150, "px"),
-      top: this.randomBetween(0, window.innerHeight - 150, "px")
+      left: this.randomLeft(),
+      top: this.randomTop()
     };
+
+    this.randomLeft();
   }
 
-  randomBetween(x, y, s) {
-    return x + Math.ceil(Math.random() * (y - x)) + s;
-  }
+  randomLeft = () => {
+    return Math.random() * 73 + 2 + "%";
+  };
+
+  randomTop = () => {
+    return Math.random() * 55 + "%";
+  };
 
   render() {
     return (
-      <div>
-        <Draggable>
-          <div className="note" style={this.style} />
-        </Draggable>
-      </div>
+      <Draggable onDrag={this.handleDrag} bounds="parent">
+        <div className="note" style={this.style} />
+      </Draggable>
     );
   }
 }
