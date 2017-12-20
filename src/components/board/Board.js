@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import "../../Board.css";
-
 import Note from "./Note";
 
 class Board extends Component {
-  eachNote = note => {
-    return (
-      <Note key={note.id} id={note.id}>
-        {note.note}
-      </Note>
-    );
-  };
-
   render() {
-    return <div className="board">{this.props.notes.map(this.eachNote)}</div>;
+    console.log(this.props);
+    return (
+      <div className="board">
+        {this.props.notes.map((note, index) => {
+          return (
+            <Note
+              key={index}
+              id={note.id ? note.id : index}
+              startingPosition={note.left ? note : false}
+              handleDelete={this.props.handleDelete}
+              updateNotes={this.props.updateNotes}
+            />
+          );
+        })}
+      </div>
+    );
   }
 }
 

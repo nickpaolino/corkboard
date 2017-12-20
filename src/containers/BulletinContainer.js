@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Board from "../components/board/Board";
 import "../Bulletin.css";
+import { connect } from "react-redux";
 
 class BulletinContainer extends Component {
   state = {
@@ -8,21 +9,28 @@ class BulletinContainer extends Component {
   };
 
   add = () => {
-    this.setState(pState => ({
-      notes: [...pState.notes, { id: this.nextId() }]
-    }));
+    this.setState({
+      notes: [...this.props.notesList, 0]
+    });
   };
 
-  nextId() {
-    this.uniqueId = this.uniqueId || 0;
-    return this.uniqueId++;
-  }
+  handleDelete = id => {
+    console.log(id);
+  };
+
+  updateNotes = note => {
+    console.log(note);
+  };
 
   render() {
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>
-        <Board notes={this.state.notes} />
+        <Board
+          notes={this.state.notes}
+          handleDelete={this.handleDelete}
+          updateNotes={this.updateNotes}
+        />
         <div className="menu">
           <button className="add" onClick={this.add}>
             +
@@ -33,4 +41,11 @@ class BulletinContainer extends Component {
   }
 }
 
-export default BulletinContainer;
+const mapStateToProps = state => {
+  return {
+    notesList: state.board.notes,
+    noteCreated: state.board.noteCreated
+  };
+};
+
+export default connect(mapStateToProps)(BulletinContainer);

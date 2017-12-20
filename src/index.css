@@ -36,4 +36,5 @@ input[type="password"] {
 
 .new.board {
   margin-left: 2%;
+  overflow: visible;
 }

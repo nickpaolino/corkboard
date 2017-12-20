@@ -1,7 +1,6 @@
 .board {
   position: relative;
   overflow: auto;
-  padding-bottom: 10px;
 }
 
 div.note {
@@ -9,6 +8,7 @@ div.note {
   width: 150px;
   background-color: rgba(228, 168, 29, 0.7);
   margin: 2px 0;
+  margin-bottom: 10px;
   position: absolute;
   box-shadow: 5px 5px 15px 0 rgba(0, 0, 0, 0.2);
   overflow: hidden;
