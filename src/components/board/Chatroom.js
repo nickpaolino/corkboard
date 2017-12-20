@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ActionCable from "actioncable";
 import Message from "./Message";
-import ReactDOM from "react-dom";
 import "../../Chatroom.css";
 
 class Chatroom extends Component {
@@ -117,10 +116,6 @@ class Chatroom extends Component {
 
   submitMessage = e => {
     e.preventDefault();
-    const chat = {
-      content: this.textInput.value,
-      username: this.props.user.username
-    };
 
     this.postMessage();
 

@@ -1,6 +1,5 @@
-import _ from "lodash";
 import React, { Component } from "react";
-import { Button, Dropdown, Grid, Header } from "semantic-ui-react";
+import { Dropdown, Grid } from "semantic-ui-react";
 
 class UserList extends Component {
   state = {
@@ -42,7 +41,7 @@ class UserList extends Component {
   };
 
   render() {
-    const { multiple, options, search, value } = this.state;
+    const { multiple, options, search } = this.state;
 
     return (
       <Grid>

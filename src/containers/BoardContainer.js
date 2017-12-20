@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import withAuth from "../components/hocs/withAuth";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import CreateBoardContainer from "./CreateBoardContainer";
 import BoardDisplayContainer from "./BoardDisplayContainer";
 import { connect } from "react-redux";
