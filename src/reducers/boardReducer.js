@@ -28,6 +28,13 @@ const boardReducer = (state = initialState, action) => {
         notes: action.media,
         noteDeleted: false
       };
+    case "UPDATE_CURRENT_NOTE":
+      const note = state.notes.find(note => note.id === action.medium.id);
+      if (note) note.moved = true;
+      return {
+        notes: state.notes,
+        ...state
+      };
     case "UPDATE_NOTES":
       const filteredMedia = state.notes.filter(
         note => note.id !== action.media.id

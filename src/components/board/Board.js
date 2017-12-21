@@ -24,7 +24,6 @@ class Board extends Component {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
-          console.log(note.left_position);
           return (
             <Note
               key={index}
@@ -34,6 +33,7 @@ class Board extends Component {
               createNote={this.createNote}
               updateNote={this.updateNote}
               noteDeleted={this.props.noteDeleted}
+              moved={note.moved}
             />
           );
         })}

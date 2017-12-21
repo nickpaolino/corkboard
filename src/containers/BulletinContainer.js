@@ -15,7 +15,7 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("in component will receive props", nextProps);
+    console.log("in component will receive props", nextProps.notesList);
     this.setState({ notes: [...nextProps.notesList] });
   }
 
@@ -58,7 +58,7 @@ class BulletinContainer extends Component {
   };
 
   handleDelete = id => {
-    this.props.deleteNote(id);
+    // this.props.deleteNote(id);
   };
 
   render() {

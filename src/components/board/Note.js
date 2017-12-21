@@ -13,6 +13,10 @@ class Note extends Component {
     };
   }
 
+  componentWillUnmount() {
+    console.log("Unmounting");
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.noteDeleted) {
       this.style = {
