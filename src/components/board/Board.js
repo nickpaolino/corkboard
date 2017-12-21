@@ -33,7 +33,7 @@ class Board extends Component {
             <Note
               key={index}
               id={note.id ? note.id : ""}
-              startingPosition={note.left ? note : false}
+              startingPosition={note.left_position ? note : false}
               handleDelete={this.props.handleDelete}
               createNote={this.createNote}
               updateNote={this.updateNote}

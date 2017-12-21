@@ -21,22 +21,14 @@ class Note extends Component {
     // console.log(this.props);
     // this.props.createNote({ ...this.style });
     this.style = {
-      left: this.randomLeft(),
-      top: this.randomTop()
+      left: this.props.startingPosition.left_position,
+      top: this.props.startingPosition.top_position
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("In componentWillReceiveProps", nextProps);
+    // console.log("In componentWillReceiveProps", nextProps);
   }
-
-  randomLeft = () => {
-    return Math.ceil(Math.random() * 480 + 20) + "px";
-  };
-
-  randomTop = () => {
-    return Math.ceil(Math.random() * 200) + "px";
-  };
 
   handleDelete = () => {
     this.props.handleDelete(this.props.id);
@@ -65,8 +57,8 @@ class Note extends Component {
     const newTop = styleTop + transformTop;
 
     this.transformedStyle = {
-      left: newLeft + "px",
-      top: newTop + "px"
+      left_position: newLeft + "px",
+      top_position: newTop + "px"
     };
   };
 
@@ -75,6 +67,7 @@ class Note extends Component {
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);
     // This is triggers a patch request
+    console.log(this.props.id);
     this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
   };
 
