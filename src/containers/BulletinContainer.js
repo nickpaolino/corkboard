@@ -8,6 +8,10 @@ class BulletinContainer extends Component {
     notes: []
   };
 
+  componentDidMount() {
+    // fetch notes for that board
+  }
+
   add = () => {
     this.setState({
       notes: [...this.props.notesList, 0]

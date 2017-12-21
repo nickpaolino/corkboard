@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
 import { Icon } from "semantic-ui-react";
-import { connect } from "react-redux";
-import * as actions from "../../actions/notes.js";
 import "../../Board.css";
 
 class Note extends Component {
@@ -67,7 +65,9 @@ class Note extends Component {
     let style = this.style;
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);
-    this.props.createNote(this.transformedStyle);
+    // This is an update -- patch request
+    console.log(this.props.id);
+    this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
   };
 
   render() {
@@ -87,4 +87,4 @@ class Note extends Component {
   }
 }
 
-export default connect(null, actions)(Note);
+export default Note;

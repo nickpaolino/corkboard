@@ -13,10 +13,10 @@ const boardReducer = (state = initialState, action) => {
         currentBoard: action.board
       };
     case "SET_CURRENT_NOTE":
-      let notes = [...state.notes, action.note];
+      let notes = [...state.notes, action.medium];
       return {
         ...state,
-        currentNote: action.note,
+        currentNote: action.medium,
         notes,
         noteCreated: true
       };

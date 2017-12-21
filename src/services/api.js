@@ -48,6 +48,32 @@ const createBoard = body => {
   }).then(res => res.json());
 };
 
+const createMedia = medium => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}media`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      Authorization: jwt
+    },
+    body: JSON.stringify(medium)
+  }).then(res => res.json());
+};
+
+const updateMedia = medium => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}media/${medium.id}`, {
+    method: "PATCH",
+    headers: {
+      ...headers,
+      Authorization: jwt
+    },
+    body: JSON.stringify(medium)
+  })
+    .then(res => res.json())
+    .then(json => console.log(json));
+};
+
 export const api = {
   auth: {
     login,
@@ -60,5 +86,9 @@ export const api = {
   boards: {
     getBoard,
     createBoard
+  },
+  media: {
+    createMedia,
+    updateMedia
   }
 };
