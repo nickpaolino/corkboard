@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/notes.js";
 
 class Board extends Component {
-  createNote = note => {
-    const formattedNote = this.formatNote(note);
-    this.props.createNote(formattedNote);
-  };
+  // createNote = note => {
+  //   const formattedNote = this.formatNote(note);
+  //   this.props.createNote(formattedNote);
+  // };
 
   updateNote = updatedNote => {
     this.props.updateNote(updatedNote);
@@ -26,7 +26,6 @@ class Board extends Component {
   };
 
   render() {
-    console.log(this.props.notes);
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {

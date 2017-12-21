@@ -20,6 +20,11 @@ const boardReducer = (state = initialState, action) => {
         notes,
         noteCreated: true
       };
+    case "FETCH_NOTES":
+      return {
+        ...state,
+        notes: action.media
+      };
     default:
       return state;
   }

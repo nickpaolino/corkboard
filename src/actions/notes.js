@@ -18,8 +18,8 @@ export const updateNote = medium => {
 
 export const fetchNotes = boardId => {
   return dispatch => {
-    api.media.fetchMedia(boardId).then(medium => {
-      dispatch({ type: "UPDATE_CURRENT_NOTE", medium });
+    api.media.fetchMedia(boardId).then(media => {
+      dispatch({ type: "FETCH_NOTES", media });
     });
   };
 };

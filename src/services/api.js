@@ -69,9 +69,14 @@ const updateMedia = medium => {
       Authorization: jwt
     },
     body: JSON.stringify(medium)
-  })
-    .then(res => res.json())
-    .then(json => console.log(json));
+  }).then(res => res.json());
+};
+
+const fetchMedia = boardId => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}media/${boardId}`, {
+    headers: { Authorization: jwt }
+  }).then(res => res.json());
 };
 
 export const api = {
@@ -89,6 +94,7 @@ export const api = {
   },
   media: {
     createMedia,
-    updateMedia
+    updateMedia,
+    fetchMedia
   }
 };

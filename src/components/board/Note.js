@@ -7,18 +7,27 @@ class Note extends Component {
   constructor(props) {
     super(props);
 
-    if (!this.props.startingPosition) {
-      this.style = {
-        left: this.randomLeft(),
-        top: this.randomTop()
-      };
-    } else {
-      this.style = {
-        left: this.props.startingPosition.left,
-        top: this.props.startingPosition.top
-      };
-    }
-    this.props.createNote({ ...this.style, id: this.props.id });
+    // if (!this.props.startingPosition) {
+    //   this.style = {
+    //     left: this.randomLeft(),
+    //     top: this.randomTop()
+    //   };
+    // } else {
+    //   this.style = {
+    //     left: this.props.startingPosition.left,
+    //     top: this.props.startingPosition.top
+    //   };
+    // }
+    // console.log(this.props);
+    // this.props.createNote({ ...this.style });
+    this.style = {
+      left: this.randomLeft(),
+      top: this.randomTop()
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log("In componentWillReceiveProps", nextProps);
   }
 
   randomLeft = () => {
@@ -65,8 +74,7 @@ class Note extends Component {
     let style = this.style;
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);
-    // This is an update -- patch request
-    console.log(this.props.id);
+    // This is triggers a patch request
     this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
   };
 
