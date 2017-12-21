@@ -5,11 +5,6 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/notes.js";
 
 class Board extends Component {
-  // createNote = note => {
-  //   const formattedNote = this.formatNote(note);
-  //   this.props.createNote(formattedNote);
-  // };
-
   updateNote = updatedNote => {
     this.props.updateNote(updatedNote);
   };

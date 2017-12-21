@@ -20,10 +20,13 @@ const boardReducer = (state = initialState, action) => {
         notes,
         noteCreated: true
       };
-    case "FETCH_NOTES":
+    case "UPDATE_NOTES":
+      const filteredMedia = state.notes.filter(
+        note => note.id !== action.media.id
+      );
       return {
         ...state,
-        notes: action.media
+        notes: filteredMedia
       };
     default:
       return state;

@@ -79,6 +79,17 @@ const fetchMedia = boardId => {
   }).then(res => res.json());
 };
 
+const deleteMedia = id => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}media/${id}`, {
+    method: "DELETE",
+    headers: {
+      ...headers,
+      Authorization: jwt
+    }
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
     login,
@@ -95,6 +106,7 @@ export const api = {
   media: {
     createMedia,
     updateMedia,
-    fetchMedia
+    fetchMedia,
+    deleteMedia
   }
 };

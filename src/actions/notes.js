@@ -23,3 +23,11 @@ export const fetchNotes = boardId => {
     });
   };
 };
+
+export const deleteNote = id => {
+  return dispatch => {
+    api.media.deleteMedia(id).then(media => {
+      dispatch({ type: "UPDATE_NOTES", media });
+    });
+  };
+};

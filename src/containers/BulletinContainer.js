@@ -10,8 +10,6 @@ class BulletinContainer extends Component {
   };
 
   componentDidMount() {
-    console.log("In componentDidMount");
-    console.log(this.props.board.id);
     // fetch notes for that board
     this.props.fetchNotes(this.props.board.id);
   }
@@ -29,10 +27,6 @@ class BulletinContainer extends Component {
     };
 
     this.createNote(note);
-
-    // this.setState({
-    //   notes: [...this.props.notesList, 0]
-    // });
   };
 
   createNote = note => {
@@ -63,48 +57,11 @@ class BulletinContainer extends Component {
     return Math.ceil(Math.random() * 200) + "px";
   };
 
-  handleDelete = () => {
-    this.props.handleDelete(this.props.id);
-  };
-
-  extractTransform = transform => {
-    transform = transform.split("(");
-    transform = transform[1].split(")");
-    transform = transform[0].split(", ");
-    let transformLeft = transform[0];
-    let transformTop = transform[1];
-    return { left: transformLeft, top: transformTop };
-  };
-
-  createNewStyle = (style, transform) => {
-    const styleLeft = parseInt(style.left.slice(0, style.left.length - 2));
-    const styleTop = parseInt(style.top.slice(0, style.top.length - 2));
-    const transformLeft = parseInt(
-      transform.left.slice(0, transform.left.length - 2)
-    );
-    const transformTop = parseInt(
-      transform.top.slice(0, transform.top.length - 2)
-    );
-
-    const newLeft = styleLeft + transformLeft;
-    const newTop = styleTop + transformTop;
-
-    this.transformedStyle = {
-      left: newLeft + "px",
-      top: newTop + "px"
-    };
-  };
-
   handleDelete = id => {
-    console.log(id);
-  };
-
-  updateNotes = note => {
-    console.log(note);
+    this.props.deleteNote(id);
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>

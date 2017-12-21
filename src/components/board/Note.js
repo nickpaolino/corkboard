@@ -7,19 +7,6 @@ class Note extends Component {
   constructor(props) {
     super(props);
 
-    // if (!this.props.startingPosition) {
-    //   this.style = {
-    //     left: this.randomLeft(),
-    //     top: this.randomTop()
-    //   };
-    // } else {
-    //   this.style = {
-    //     left: this.props.startingPosition.left,
-    //     top: this.props.startingPosition.top
-    //   };
-    // }
-    // console.log(this.props);
-    // this.props.createNote({ ...this.style });
     this.style = {
       left: this.props.startingPosition.left_position,
       top: this.props.startingPosition.top_position
@@ -67,7 +54,6 @@ class Note extends Component {
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);
     // This is triggers a patch request
-    console.log(this.props.id);
     this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
   };
 
