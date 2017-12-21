@@ -15,7 +15,7 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("in component will receive props", nextProps.notesList);
+    console.log("in component will receive props", nextProps);
     this.setState({ notes: [...nextProps.notesList] });
   }
 
@@ -69,6 +69,7 @@ class BulletinContainer extends Component {
           notes={this.state.notes}
           handleDelete={this.handleDelete}
           updateNotes={this.updateNotes}
+          noteDeleted={this.props.noteDeleted}
         />
         <div className="menu">
           <button className="add" onClick={this.add}>
@@ -84,6 +85,7 @@ const mapStateToProps = state => {
   return {
     notesList: state.board.notes,
     noteCreated: state.board.noteCreated,
+    noteDeleted: state.board.noteDeleted,
     board: state.board.currentBoard,
     user: state.auth.currentUser
   };

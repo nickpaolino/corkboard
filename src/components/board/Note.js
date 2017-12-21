@@ -14,6 +14,12 @@ class Note extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.noteDeleted) {
+      this.style = {
+        left: nextProps.startingPosition.left_position,
+        top: nextProps.startingPosition.top_position
+      };
+    }
     // console.log("In componentWillReceiveProps", nextProps);
   }
 
