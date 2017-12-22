@@ -6,7 +6,7 @@ import * as actions from "../../actions/notes.js";
 
 class Board extends Component {
   updateNote = updatedNote => {
-    this.props.updateNote(updatedNote);
+    this.props.updateNote(updatedNote, this.props.board.id);
   };
 
   formatNote = note => {
@@ -24,6 +24,12 @@ class Board extends Component {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
+          console.log(
+            "In board, note #",
+            note.id,
+            "is deleted:",
+            this.props.deletedNotes.includes(note.id)
+          );
           return (
             <Note
               key={index}
@@ -33,7 +39,10 @@ class Board extends Component {
               createNote={this.createNote}
               updateNote={this.updateNote}
               noteDeleted={this.props.noteDeleted}
+              deletedNotes={this.props.deletedNotes}
               moved={note.moved}
+              informMove={this.props.informMove}
+              movedNotes={this.props.movedNotes}
             />
           );
         })}

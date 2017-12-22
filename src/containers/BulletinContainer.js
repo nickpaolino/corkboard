@@ -5,9 +5,15 @@ import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
 
 class BulletinContainer extends Component {
-  state = {
-    notes: []
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      notes: [],
+      deletedNotes: [],
+      movedNotes: []
+    };
+  }
 
   componentDidMount() {
     // fetch notes for that board
@@ -15,7 +21,6 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("in component will receive props", nextProps.notesList);
     this.setState({ notes: [...nextProps.notesList] });
   }
 
@@ -58,10 +63,29 @@ class BulletinContainer extends Component {
   };
 
   handleDelete = id => {
-    // this.props.deleteNote(id);
+    console.log("Deleting", id);
+    const deletedNotes = [...this.state.deletedNotes, id];
+    this.setState({
+      deletedNotes
+    });
+    this.props.deleteNote(id, this.props.board.id);
+  };
+
+  informMove = id => {
+    console.log("Informed Moved", id);
+    let movedNotes;
+    if (!this.state.movedNotes.includes(id)) {
+      movedNotes = [...this.state.movedNotes, id];
+    } else {
+      movedNotes = [...this.state.movedNotes];
+    }
+    this.setState({
+      movedNotes
+    });
   };
 
   render() {
+    console.log("Moved notes are:", this.state.movedNotes);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>
@@ -70,6 +94,9 @@ class BulletinContainer extends Component {
           handleDelete={this.handleDelete}
           updateNotes={this.updateNotes}
           noteDeleted={this.props.noteDeleted}
+          deletedNotes={this.state.deletedNotes}
+          informMove={this.informMove}
+          movedNotes={this.state.movedNotes}
         />
         <div className="menu">
           <button className="add" onClick={this.add}>

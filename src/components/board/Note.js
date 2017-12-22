@@ -14,7 +14,25 @@ class Note extends Component {
   }
 
   componentWillUnmount() {
-    console.log("Unmounting");
+    // console.log("Unmounting", this.props.id);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // console.log("moved notes", nextProps.movedNotes);
+    // console.log(
+    //   "Note #",
+    //   this.props.id,
+    //   "is deleted:",
+    //   this.props.deletedNotes.includes(this.props.id)
+    // );
+    // console.log(
+    //   "Note #",
+    //   this.props.id,
+    //   "has moved:",
+    //   nextProps.movedNotes.includes(this.props.id)
+    // );
+    console.log("Note #", this.props.id, "is updating");
+    return true;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,7 +42,6 @@ class Note extends Component {
         top: nextProps.startingPosition.top_position
       };
     }
-    // console.log("In componentWillReceiveProps", nextProps);
   }
 
   handleDelete = () => {
@@ -60,6 +77,7 @@ class Note extends Component {
   };
 
   handleStop = e => {
+    this.props.informMove(this.props.id);
     let style = this.style;
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);

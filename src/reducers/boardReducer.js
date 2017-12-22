@@ -2,6 +2,7 @@ const initialState = {
   currentBoard: {},
   notes: [],
   currentNote: {},
+  deletedNotes: [],
   noteCreated: false,
   noteDeleted: false
 };
@@ -30,7 +31,6 @@ const boardReducer = (state = initialState, action) => {
       };
     case "UPDATE_CURRENT_NOTE":
       const note = state.notes.find(note => note.id === action.medium.id);
-      if (note) note.moved = true;
       return {
         notes: state.notes,
         ...state
@@ -39,6 +39,7 @@ const boardReducer = (state = initialState, action) => {
       const filteredMedia = state.notes.filter(
         note => note.id !== action.media.id
       );
+      const deletedNotes = [...state.deletedNotes, action.media];
       return {
         ...state,
         notes: filteredMedia,
