@@ -30,6 +30,7 @@ class Board extends Component {
             "is deleted:",
             this.props.deletedNotes.includes(note.id)
           );
+          console.log("Rendering", note);
           return (
             <Note
               key={index}
@@ -41,7 +42,6 @@ class Board extends Component {
               noteDeleted={this.props.noteDeleted}
               deletedNotes={this.props.deletedNotes}
               moved={note.moved}
-              informMove={this.props.informMove}
               movedNotes={this.props.movedNotes}
             />
           );

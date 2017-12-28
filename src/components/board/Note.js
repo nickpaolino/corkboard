@@ -77,7 +77,6 @@ class Note extends Component {
   };
 
   handleStop = e => {
-    this.props.informMove(this.props.id);
     let style = this.style;
     let transform = this.extractTransform(this.noteDiv.style.transform);
     this.createNewStyle(style, transform);

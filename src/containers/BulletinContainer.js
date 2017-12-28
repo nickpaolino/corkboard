@@ -11,7 +11,8 @@ class BulletinContainer extends Component {
     this.state = {
       notes: [],
       deletedNotes: [],
-      movedNotes: []
+      movedNotes: [],
+      notesUpdated: false
     };
   }
 
@@ -21,6 +22,7 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("In componentWillReceiveProps", nextProps.notesList);
     this.setState({ notes: [...nextProps.notesList] });
   }
 
@@ -62,27 +64,35 @@ class BulletinContainer extends Component {
     return Math.ceil(Math.random() * 200) + "px";
   };
 
+  // informUpdate = updatedNote => {
+  //   const notes = this.state.notes.find(note => note.id === updatedNote.id);
+  //   this.setState({ notes: [...this.state.notes], notesUpdated: true });
+  // };
+
   handleDelete = id => {
     console.log("Deleting", id);
-    const deletedNotes = [...this.state.deletedNotes, id];
-    this.setState({
-      deletedNotes
-    });
-    this.props.deleteNote(id, this.props.board.id);
+
+    // const deletedNotes = [...this.state.deletedNotes, id];
+    // this.setState({
+    //   deletedNotes
+    // });
+    this.props
+      .deleteNote(id, this.props.board.id)
+      .then(res => this.props.fetchNotes(this.props.board.id));
   };
 
-  informMove = id => {
-    console.log("Informed Moved", id);
-    let movedNotes;
-    if (!this.state.movedNotes.includes(id)) {
-      movedNotes = [...this.state.movedNotes, id];
-    } else {
-      movedNotes = [...this.state.movedNotes];
-    }
-    this.setState({
-      movedNotes
-    });
-  };
+  // informMove = id => {
+  //   console.log("Informed Moved", id);
+  //   let movedNotes;
+  //   if (!this.state.movedNotes.includes(id)) {
+  //     movedNotes = [...this.state.movedNotes, id];
+  //   } else {
+  //     movedNotes = [...this.state.movedNotes];
+  //   }
+  //   this.setState({
+  //     movedNotes
+  //   });
+  // };
 
   render() {
     console.log("Moved notes are:", this.state.movedNotes);
@@ -95,8 +105,8 @@ class BulletinContainer extends Component {
           updateNotes={this.updateNotes}
           noteDeleted={this.props.noteDeleted}
           deletedNotes={this.state.deletedNotes}
-          informMove={this.informMove}
           movedNotes={this.state.movedNotes}
+          informUpdate={this.informUpdate}
         />
         <div className="menu">
           <button className="add" onClick={this.add}>
