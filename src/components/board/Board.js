@@ -7,6 +7,7 @@ import * as actions from "../../actions/notes.js";
 class Board extends Component {
   updateNote = updatedNote => {
     this.props.updateNote(updatedNote, this.props.board.id);
+    this.props.mapNotes(null, updatedNote);
   };
 
   formatNote = note => {
@@ -25,24 +26,19 @@ class Board extends Component {
       <div className="board">
         {this.props.notes.map((note, index) => {
           console.log(
-            "In board, note #",
+            "In board",
             note.id,
-            "is deleted:",
-            this.props.deletedNotes.includes(note.id)
+            note.left_position,
+            note.top_position
           );
-          console.log("Rendering", note);
           return (
             <Note
               key={index}
-              id={note.id ? note.id : ""}
-              startingPosition={note.left_position ? note : false}
+              id={note.id}
+              startingPosition={note}
               handleDelete={this.props.handleDelete}
-              createNote={this.createNote}
               updateNote={this.updateNote}
-              noteDeleted={this.props.noteDeleted}
-              deletedNotes={this.props.deletedNotes}
-              moved={note.moved}
-              movedNotes={this.props.movedNotes}
+              informDelete={this.informDelete}
             />
           );
         })}

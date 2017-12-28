@@ -11,40 +11,17 @@ class Note extends Component {
       left: this.props.startingPosition.left_position,
       top: this.props.startingPosition.top_position
     };
-  }
 
-  componentWillUnmount() {
-    // console.log("Unmounting", this.props.id);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    // console.log("moved notes", nextProps.movedNotes);
-    // console.log(
-    //   "Note #",
-    //   this.props.id,
-    //   "is deleted:",
-    //   this.props.deletedNotes.includes(this.props.id)
-    // );
-    // console.log(
-    //   "Note #",
-    //   this.props.id,
-    //   "has moved:",
-    //   nextProps.movedNotes.includes(this.props.id)
-    // );
-    console.log("Note #", this.props.id, "is updating");
-    return true;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.noteDeleted) {
-      this.style = {
-        left: nextProps.startingPosition.left_position,
-        top: nextProps.startingPosition.top_position
-      };
-    }
+    this.state = {
+      deleted: false
+    };
   }
 
   handleDelete = () => {
+    console.log("handle delete", this.props.id);
+    this.setState({
+      deleted: true
+    });
     this.props.handleDelete(this.props.id);
   };
 
@@ -77,14 +54,22 @@ class Note extends Component {
   };
 
   handleStop = e => {
-    let style = this.style;
-    let transform = this.extractTransform(this.noteDiv.style.transform);
-    this.createNewStyle(style, transform);
-    // This is triggers a patch request
-    this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
+    if (e.target.className !== "delete icon") {
+      this.deleted = false;
+      let style = this.style;
+      let transform = this.extractTransform(this.noteDiv.style.transform);
+      this.createNewStyle(style, transform);
+      // This is triggers a patch request
+      this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
+    } else {
+      this.deleted = true;
+    }
   };
 
   render() {
+    if (this.state.deleted) {
+      this.style = { ...this.style, opacity: "0" };
+    }
     return (
       <Draggable onStop={this.handleStop} bounds="parent">
         <div
@@ -93,7 +78,11 @@ class Note extends Component {
           ref={div => (this.noteDiv = div)}
           style={this.style}
         >
-          <Icon onClick={this.handleDelete} name="delete" />
+          <Icon
+            ref={div => (this.deleteButton = div)}
+            onClick={this.handleDelete}
+            name="delete"
+          />
           {this.props.id}
         </div>
       </Draggable>

@@ -22,9 +22,25 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("In componentWillReceiveProps", nextProps.notesList);
-    this.setState({ notes: [...nextProps.notesList] });
+    this.mapNotes(nextProps);
   }
+
+  mapNotes = (notes, updatedNote) => {
+    if (notes) {
+      this.setState({ notes: [...notes.notesList] });
+    } else {
+      const newNotes = this.state.notes.map(note => {
+        if (note.id === updatedNote.id) {
+          note.left_position = updatedNote.left_position;
+          note.top_position = updatedNote.top_position;
+          return note;
+        } else {
+          return note;
+        }
+      });
+      this.setState({ notes: newNotes });
+    }
+  };
 
   add = () => {
     // Create a new note object here instead of mapping down to the Note component first
@@ -39,10 +55,6 @@ class BulletinContainer extends Component {
   createNote = note => {
     const formattedNote = this.formatNote(note);
     this.props.createNote(formattedNote);
-  };
-
-  updateNote = updatedNote => {
-    this.props.updateNote(updatedNote);
   };
 
   formatNote = note => {
@@ -64,38 +76,16 @@ class BulletinContainer extends Component {
     return Math.ceil(Math.random() * 200) + "px";
   };
 
-  // informUpdate = updatedNote => {
-  //   const notes = this.state.notes.find(note => note.id === updatedNote.id);
-  //   this.setState({ notes: [...this.state.notes], notesUpdated: true });
-  // };
-
   handleDelete = id => {
     console.log("Deleting", id);
-
-    // const deletedNotes = [...this.state.deletedNotes, id];
-    // this.setState({
-    //   deletedNotes
-    // });
-    this.props
-      .deleteNote(id, this.props.board.id)
-      .then(res => this.props.fetchNotes(this.props.board.id));
+    this.props.deleteNote(id, this.props.board.id);
+    // const notesList = this.state.notes.filter(note => note.id !== id);
+    // const notes = { notesList };
+    // console.log(notes.notesList);
+    // this.mapNotes(notes);
   };
 
-  // informMove = id => {
-  //   console.log("Informed Moved", id);
-  //   let movedNotes;
-  //   if (!this.state.movedNotes.includes(id)) {
-  //     movedNotes = [...this.state.movedNotes, id];
-  //   } else {
-  //     movedNotes = [...this.state.movedNotes];
-  //   }
-  //   this.setState({
-  //     movedNotes
-  //   });
-  // };
-
   render() {
-    console.log("Moved notes are:", this.state.movedNotes);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>
@@ -106,7 +96,7 @@ class BulletinContainer extends Component {
           noteDeleted={this.props.noteDeleted}
           deletedNotes={this.state.deletedNotes}
           movedNotes={this.state.movedNotes}
-          informUpdate={this.informUpdate}
+          mapNotes={this.mapNotes}
         />
         <div className="menu">
           <button className="add" onClick={this.add}>
@@ -124,7 +114,8 @@ const mapStateToProps = state => {
     noteCreated: state.board.noteCreated,
     noteDeleted: state.board.noteDeleted,
     board: state.board.currentBoard,
-    user: state.auth.currentUser
+    user: state.auth.currentUser,
+    noteUpdated: state.board.noteUpdated
   };
 };
 

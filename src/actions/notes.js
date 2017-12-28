@@ -10,7 +10,7 @@ export const createNote = medium => {
 
 export const updateNote = medium => {
   return dispatch => {
-    api.media.updateMedia(medium).then(medium => {
+    return api.media.updateMedia(medium).then(medium => {
       dispatch({ type: "UPDATE_CURRENT_NOTE", medium });
     });
   };
@@ -26,6 +26,8 @@ export const fetchNotes = boardId => {
 
 export const deleteNote = id => {
   return dispatch => {
-    return api.media.deleteMedia(id);
+    api.media.deleteMedia(id).then(media => {
+      // dispatch({ type: "UPDATE_NOTES", media });
+    });
   };
 };
