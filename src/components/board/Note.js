@@ -8,8 +8,8 @@ class Note extends Component {
     super(props);
 
     this.style = {
-      left: this.props.startingPosition.left_position,
-      top: this.props.startingPosition.top_position
+      left: this.props.left,
+      top: this.props.top
     };
 
     this.state = {
@@ -18,7 +18,6 @@ class Note extends Component {
   }
 
   handleDelete = () => {
-    console.log("handle delete", this.props.id);
     this.setState({
       deleted: true
     });
@@ -61,8 +60,6 @@ class Note extends Component {
       this.createNewStyle(style, transform);
       // This is triggers a patch request
       this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
-    } else {
-      this.deleted = true;
     }
   };
 

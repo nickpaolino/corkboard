@@ -5,16 +5,9 @@ import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
 
 class BulletinContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      notes: [],
-      deletedNotes: [],
-      movedNotes: [],
-      notesUpdated: false
-    };
-  }
+  state = {
+    notes: []
+  };
 
   componentDidMount() {
     // fetch notes for that board
@@ -28,17 +21,6 @@ class BulletinContainer extends Component {
   mapNotes = (notes, updatedNote) => {
     if (notes) {
       this.setState({ notes: [...notes.notesList] });
-    } else {
-      const newNotes = this.state.notes.map(note => {
-        if (note.id === updatedNote.id) {
-          note.left_position = updatedNote.left_position;
-          note.top_position = updatedNote.top_position;
-          return note;
-        } else {
-          return note;
-        }
-      });
-      this.setState({ notes: newNotes });
     }
   };
 
@@ -77,12 +59,8 @@ class BulletinContainer extends Component {
   };
 
   handleDelete = id => {
-    console.log("Deleting", id);
+    // Deletes the note from the database
     this.props.deleteNote(id, this.props.board.id);
-    // const notesList = this.state.notes.filter(note => note.id !== id);
-    // const notes = { notesList };
-    // console.log(notes.notesList);
-    // this.mapNotes(notes);
   };
 
   render() {
@@ -92,10 +70,6 @@ class BulletinContainer extends Component {
         <Board
           notes={this.state.notes}
           handleDelete={this.handleDelete}
-          updateNotes={this.updateNotes}
-          noteDeleted={this.props.noteDeleted}
-          deletedNotes={this.state.deletedNotes}
-          movedNotes={this.state.movedNotes}
           mapNotes={this.mapNotes}
         />
         <div className="menu">
@@ -111,11 +85,8 @@ class BulletinContainer extends Component {
 const mapStateToProps = state => {
   return {
     notesList: state.board.notes,
-    noteCreated: state.board.noteCreated,
-    noteDeleted: state.board.noteDeleted,
     board: state.board.currentBoard,
-    user: state.auth.currentUser,
-    noteUpdated: state.board.noteUpdated
+    user: state.auth.currentUser
   };
 };
 

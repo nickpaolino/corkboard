@@ -25,20 +25,14 @@ class Board extends Component {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
-          console.log(
-            "In board",
-            note.id,
-            note.left_position,
-            note.top_position
-          );
           return (
             <Note
               key={index}
               id={note.id}
-              startingPosition={note}
+              left={note.left_position}
+              top={note.top_position}
               handleDelete={this.props.handleDelete}
               updateNote={this.updateNote}
-              informDelete={this.informDelete}
             />
           );
         })}
