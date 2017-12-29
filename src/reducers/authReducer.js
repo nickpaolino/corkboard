@@ -27,6 +27,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         users: users
       };
+    case "UPDATE_BOARDS":
+      return {
+        ...state,
+        currentUser: { ...state.currentUser, boards: action.boards }
+      };
     default:
       return state;
   }

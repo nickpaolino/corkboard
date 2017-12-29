@@ -82,8 +82,10 @@ class CreateBoardContainer extends Component {
       public: isPublic,
       users
     };
-    // Create board
-    this.props.createBoard(body, this.props.history);
+    // Create board and then fetch the updated list of the user's boards for the Navbar
+    this.props
+      .createBoard(body, this.props.history)
+      .then(() => this.props.getBoards());
   };
 
   render() {

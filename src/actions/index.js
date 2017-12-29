@@ -58,7 +58,7 @@ export const getBoard = (id, history) => {
 
 export const createBoard = (board, history) => {
   return dispatch => {
-    api.boards.createBoard(board).then(board => {
+    return api.boards.createBoard(board).then(board => {
       dispatch({ type: "GET_CURRENT_BOARD", board });
       history.push(`/boards/${board.id}`);
     });
@@ -70,6 +70,17 @@ export const getUsers = () => {
   return dispatch => {
     api.users.getAllUsers(token).then(users => {
       dispatch({ type: "SET_USERS", users });
+    });
+  };
+};
+
+export const getBoards = () => {
+  const token = localStorage.getItem("token");
+  return dispatch => {
+    api.users.getBoards().then(user => {
+      console.log(user.boards);
+      const boards = user.boards;
+      dispatch({ type: "UPDATE_BOARDS", boards });
     });
   };
 };

@@ -48,6 +48,13 @@ const createBoard = body => {
   }).then(res => res.json());
 };
 
+const getBoards = () => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}current_user`, {
+    headers: { Authorization: jwt }
+  }).then(res => res.json());
+};
+
 const createMedia = medium => {
   const jwt = localStorage.getItem("token");
   return fetch(`${url}media`, {
@@ -97,7 +104,8 @@ export const api = {
     createUser
   },
   users: {
-    getAllUsers
+    getAllUsers,
+    getBoards
   },
   boards: {
     getBoard,
