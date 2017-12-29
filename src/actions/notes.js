@@ -18,7 +18,7 @@ export const updateNote = medium => {
 
 export const fetchNotes = boardId => {
   return dispatch => {
-    api.media.fetchMedia(boardId).then(media => {
+    return api.media.fetchMedia(boardId).then(media => {
       dispatch({ type: "FETCH_NOTES", media });
     });
   };
@@ -29,5 +29,11 @@ export const deleteNote = id => {
     api.media.deleteMedia(id).then(media => {
       // dispatch({ type: "UPDATE_NOTES", media });
     });
+  };
+};
+
+export const justFetchedBoard = () => {
+  return dispatch => {
+    dispatch({ type: "JUST_FETCHED_BOARD" });
   };
 };

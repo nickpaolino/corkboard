@@ -21,10 +21,15 @@ class Board extends Component {
     };
   };
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+
   render() {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
+          console.log("In board, note is", note);
           return (
             <Note
               key={index}
@@ -33,6 +38,7 @@ class Board extends Component {
               top={note.top_position}
               handleDelete={this.props.handleDelete}
               updateNote={this.updateNote}
+              updated={note.updated ? true : false}
             />
           );
         })}

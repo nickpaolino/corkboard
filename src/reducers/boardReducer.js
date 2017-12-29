@@ -1,6 +1,7 @@
 const initialState = {
   currentBoard: {},
-  notes: []
+  notes: [],
+  justFetchedBoard: false
 };
 
 const boardReducer = (state = initialState, action) => {
@@ -8,22 +9,26 @@ const boardReducer = (state = initialState, action) => {
     case "GET_CURRENT_BOARD":
       return {
         ...state,
-        currentBoard: action.board
+        currentBoard: action.board,
+        notes: action.board.media
       };
     case "SET_CURRENT_NOTE":
       let notes = [...state.notes, action.medium];
       return {
+        justFetchedBoard: false,
         ...state,
         notes
       };
     case "FETCH_NOTES":
       return {
         ...state,
+        justFetchedBoard: false,
         notes: action.media
       };
     case "UPDATE_CURRENT_NOTE":
       return {
         ...state,
+        justFetchedBoard: false,
         notes: state.notes
       };
     case "UPDATE_NOTES":
@@ -33,7 +38,13 @@ const boardReducer = (state = initialState, action) => {
       const deletedNotes = [...state.deletedNotes, action.media];
       return {
         ...state,
+        justFetchedBoard: false,
         notes: filteredMedia
+      };
+    case "JUST_FETCHED_BOARD":
+      return {
+        ...state,
+        justFetchedBoard: true
       };
     default:
       return state;

@@ -5,9 +5,15 @@ import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
 
 class BulletinContainer extends Component {
-  state = {
-    notes: []
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      notes: [],
+      reset: false,
+      nextProps: {}
+    };
+  }
 
   componentDidMount() {
     // fetch notes for that board
@@ -15,12 +21,24 @@ class BulletinContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.mapNotes(nextProps);
+    if (this.props.board.id !== nextProps.board.id && !this.state.reset) {
+      console.log("Resetting state");
+      this.setState({ notes: [], reset: true });
+    } else {
+      this.mapNotes(nextProps);
+    }
   }
 
-  mapNotes = (notes, updatedNote) => {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.reset) {
+      this.mapNotes(nextProps);
+    }
+    return true;
+  }
+
+  mapNotes = (notes, updatedBoard) => {
     if (notes) {
-      this.setState({ notes: [...notes.notesList] });
+      this.setState({ notes: [...notes.notesList], reset: false });
     }
   };
 

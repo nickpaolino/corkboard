@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
 import { Icon } from "semantic-ui-react";
+import { connect } from "react-redux";
 import "../../Board.css";
 
 class Note extends Component {
@@ -13,7 +14,8 @@ class Note extends Component {
     };
 
     this.state = {
-      deleted: false
+      deleted: false,
+      movedNotes: []
     };
   }
 
@@ -60,13 +62,29 @@ class Note extends Component {
       this.createNewStyle(style, transform);
       // This is triggers a patch request
       this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
+      if (!this.state.movedNotes.includes(this.props.id)) {
+        this.setState({
+          movedNotes: [...this.state.movedNotes, this.props.id]
+        });
+      }
     }
   };
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps.id, nextProps.left, nextProps.top);
+  //   if (nextProps.updated) {
+  //     this.style = {
+  //       left: nextProps.left,
+  //       top: nextProps.top
+  //     };
+  //   }
+  // }
 
   render() {
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0" };
     }
+    console.log("Rendering", this.props.id, this.style);
     return (
       <Draggable onStop={this.handleStop} bounds="parent">
         <div
@@ -87,4 +105,11 @@ class Note extends Component {
   }
 }
 
-export default Note;
+const mapStateToProps = state => {
+  return {
+    board: state.board.currentBoard,
+    justFetchedBoard: state.board.justFetchedBoard
+  };
+};
+
+export default connect(mapStateToProps)(Note);
