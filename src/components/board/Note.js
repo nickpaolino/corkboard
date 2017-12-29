@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import { Icon } from "semantic-ui-react";
+import { Icon, Form, TextArea, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import "../../Board.css";
 
@@ -15,7 +15,9 @@ class Note extends Component {
 
     this.state = {
       deleted: false,
-      movedNotes: []
+      movedNotes: [],
+      editable: true,
+      value: ""
     };
   }
 
@@ -80,11 +82,48 @@ class Note extends Component {
   //   }
   // }
 
+  componentDidUpdate() {
+    this.focusAndSelect();
+  }
+
+  focus = () => {
+    this.refs.newText.focus();
+  };
+
+  select = () => {
+    this.refs.newText.select();
+  };
+
+  focusAndSelect = () => {
+    this.focus();
+    this.select();
+  };
+
+  handleClick = e => {
+    e.target.focus();
+    e.target.select();
+  };
+
+  handleEdit = e => {
+    this.setState({
+      editable: true
+    });
+  };
+
+  handleKeyPress = e => {
+    if (e.key == "Enter") {
+      // Persist to database here
+      this.setState({
+        editable: false,
+        value: this.refs.newText.value
+      });
+    }
+  };
+
   render() {
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0" };
     }
-    console.log("Rendering", this.props.id, this.style);
     return (
       <Draggable onStop={this.handleStop} bounds="parent">
         <div
@@ -98,7 +137,27 @@ class Note extends Component {
             onClick={this.handleDelete}
             name="delete"
           />
-          {this.props.id}
+          <Icon name="pencil" onClick={this.handleEdit} />
+          <textarea
+            maxLength="65"
+            onClick={this.handleClick}
+            onKeyPress={this.handleKeyPress}
+            value={this.state.editable ? undefined : this.state.value}
+            disabled={!this.state.editable}
+            style={{
+              backgroundColor: "rgba(0, 0, 0, 0)",
+              borderColor: "rgba(0, 0, 0, 0)",
+              outline: "none",
+              fontFamily: "Ubuntu",
+              fontSize: "20px",
+              wrap: "hard",
+              height: "100%",
+              width: "100%",
+              textOverflow: "ellipsis",
+              whiteSpace: "wrap"
+            }}
+            ref="newText"
+          />
         </div>
       </Draggable>
     );

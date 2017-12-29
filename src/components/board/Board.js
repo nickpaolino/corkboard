@@ -21,15 +21,10 @@ class Board extends Component {
     };
   };
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   render() {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
-          console.log("In board, note is", note);
           return (
             <Note
               key={index}
