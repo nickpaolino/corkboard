@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Draggable from "react-draggable";
 import { Icon, Form, TextArea, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { api } from "../../services/api";
 import "../../Board.css";
 
 class Note extends Component {
@@ -112,17 +113,7 @@ class Note extends Component {
   };
 
   updateNote = text => {
-    const body = { caption: text };
-    const jwt = localStorage.getItem("token");
-    fetch(`http://localhost:3000/api/v1/media/${this.props.id}/change`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: jwt
-      },
-      method: "PATCH",
-      body: JSON.stringify(body)
-    }).then(res => res.json());
+    api.media.updateMediaContent(text, this.props.id);
   };
 
   render() {

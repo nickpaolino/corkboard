@@ -97,6 +97,20 @@ const deleteMedia = id => {
   }).then(res => res.json());
 };
 
+const updateMediaContent = (text, id) => {
+  const body = { caption: text };
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}media/${id}/change`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: jwt
+    },
+    method: "PATCH",
+    body: JSON.stringify(body)
+  }).then(res => res.json());
+};
+
 export const api = {
   auth: {
     login,
@@ -115,6 +129,7 @@ export const api = {
     createMedia,
     updateMedia,
     fetchMedia,
-    deleteMedia
+    deleteMedia,
+    updateMediaContent
   }
 };
