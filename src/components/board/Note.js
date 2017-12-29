@@ -16,8 +16,8 @@ class Note extends Component {
     this.state = {
       deleted: false,
       movedNotes: [],
-      editable: true,
-      value: ""
+      editable: !this.props.text,
+      value: this.props.text
     };
   }
 
@@ -72,16 +72,6 @@ class Note extends Component {
     }
   };
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps.id, nextProps.left, nextProps.top);
-  //   if (nextProps.updated) {
-  //     this.style = {
-  //       left: nextProps.left,
-  //       top: nextProps.top
-  //     };
-  //   }
-  // }
-
   componentDidUpdate() {
     this.focusAndSelect();
   }
@@ -113,11 +103,26 @@ class Note extends Component {
   handleKeyPress = e => {
     if (e.key == "Enter") {
       // Persist to database here
+      this.updateNote(this.refs.newText.value);
       this.setState({
         editable: false,
         value: this.refs.newText.value
       });
     }
+  };
+
+  updateNote = text => {
+    const body = { caption: text };
+    const jwt = localStorage.getItem("token");
+    fetch(`http://localhost:3000/api/v1/media/${this.props.id}/change`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: jwt
+      },
+      method: "PATCH",
+      body: JSON.stringify(body)
+    }).then(res => res.json());
   };
 
   render() {
@@ -142,7 +147,9 @@ class Note extends Component {
             maxLength="65"
             onClick={this.handleClick}
             onKeyPress={this.handleKeyPress}
-            value={this.state.editable ? undefined : this.state.value}
+            defaultValue={
+              this.state.editable ? this.state.value : this.state.value
+            }
             disabled={!this.state.editable}
             style={{
               backgroundColor: "rgba(0, 0, 0, 0)",

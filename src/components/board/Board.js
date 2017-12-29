@@ -34,6 +34,7 @@ class Board extends Component {
               handleDelete={this.props.handleDelete}
               updateNote={this.updateNote}
               updated={note.updated ? true : false}
+              text={note.caption ? note.caption : undefined}
             />
           );
         })}
