@@ -210,7 +210,6 @@ class Note extends Component {
             href={
               !!this.state.link && !this.state.editable ? this.state.link : null
             }
-            className="link"
           >
             <textarea
               maxLength="65"
@@ -231,7 +230,8 @@ class Note extends Component {
                 width: "100%",
                 textOverflow: "ellipsis",
                 whiteSpace: "wrap",
-                textDecoration: !this.state.editable ? "underline" : ""
+                textDecoration:
+                  !this.state.editable && !!this.state.link ? "underline" : ""
               }}
               ref="newText"
             />

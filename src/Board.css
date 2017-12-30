@@ -34,6 +34,10 @@ div.note button {
   margin: 2px;
 }
 
-a {
+a.link {
   text-decoration: underline !important;
+}
+
+a.nonlink {
+  font-size: 100px !important;
 }
