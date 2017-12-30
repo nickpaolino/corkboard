@@ -22,7 +22,6 @@ class BulletinContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.board.id !== nextProps.board.id && !this.state.reset) {
-      console.log("Resetting state");
       this.setState({ notes: [], reset: true });
     } else {
       this.mapNotes(nextProps);
