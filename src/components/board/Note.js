@@ -147,16 +147,34 @@ class Note extends Component {
       >
         <Header
           icon="linkify"
-          content={`Add a link to your ${this.props.board.subject} board`}
+          content={
+            !!this.state.link
+              ? `Change the current link of this resource`
+              : `Add a link to your ${this.props.board.subject} board`
+          }
         />
         <Modal.Actions>
           <Input
-            style={{ padding: "10px" }}
+            style={{ paddingTop: "10px" }}
             fluid
             size="small"
             placeholder="Link..."
             ref={input => (this.linkInput = input)}
           />
+        </Modal.Actions>
+        {!!this.state.link ? (
+          <Modal.Content>
+            <h4>
+              Current Link:{" "}
+              <a target="_blank" href={this.state.link}>
+                {this.state.link}
+              </a>
+            </h4>
+          </Modal.Content>
+        ) : (
+          ""
+        )}
+        <Modal.Actions>
           <Button onClick={this.handleClose} basic color="red">
             <Icon name="remove" /> Cancel
           </Button>
@@ -190,9 +208,7 @@ class Note extends Component {
           <a
             target="_blank"
             href={
-              !!this.state.link.length && !this.state.editable
-                ? this.state.link
-                : null
+              !!this.state.link && !this.state.editable ? this.state.link : null
             }
             className="link"
           >
