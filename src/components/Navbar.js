@@ -19,7 +19,11 @@ class Navbar extends Component {
   };
 
   handleDropdownClick = e => {
-    this.props.getBoard(e.target.id, this.props.history);
+    const clickedBoardId = e.target.id;
+    const currentBoardId = this.props.history.location.pathname.split("/")[2];
+    if (clickedBoardId !== currentBoardId) {
+      this.props.getBoard(e.target.id, this.props.history);
+    }
   };
 
   render() {
