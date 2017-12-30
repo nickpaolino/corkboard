@@ -73,7 +73,6 @@ class Note extends Component {
       let style = this.style;
       let transform = this.extractTransform(this.noteDiv.style.transform);
       this.createNewStyle(style, transform);
-      // This triggers a patch request
       this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
       if (!this.state.movedNotes.includes(this.props.id)) {
         this.setState({
