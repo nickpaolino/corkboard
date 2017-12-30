@@ -27,7 +27,8 @@ class Note extends Component {
       movedNotes: [],
       editable: !this.props.text,
       value: this.props.text,
-      modalOpen: false
+      modalOpen: false,
+      link: ""
     };
   }
 
@@ -132,6 +133,8 @@ class Note extends Component {
   addLink = () => {
     this.handleClose();
     // Add link here
+    const link = this.linkInput.inputRef.value;
+    this.setState({ link });
   };
 
   modalLink = () => {
@@ -152,6 +155,7 @@ class Note extends Component {
             fluid
             size="small"
             placeholder="Link..."
+            ref={input => (this.linkInput = input)}
           />
           <Button onClick={this.handleClose} basic color="red">
             <Icon name="remove" /> Cancel
@@ -183,28 +187,39 @@ class Note extends Component {
           />
           <Icon name="pencil" onClick={this.handleEdit} />
           {this.modalLink()}
-          <textarea
-            maxLength="65"
-            onClick={this.handleClick}
-            onKeyPress={this.handleKeyPress}
-            defaultValue={
-              this.state.editable ? this.state.value : this.state.value
+          <a
+            target="_blank"
+            href={
+              !!this.state.link.length && !this.state.editable
+                ? this.state.link
+                : null
             }
-            disabled={!this.state.editable}
-            style={{
-              backgroundColor: "rgba(0, 0, 0, 0)",
-              borderColor: "rgba(0, 0, 0, 0)",
-              outline: "none",
-              fontFamily: "Ubuntu",
-              fontSize: "20px",
-              wrap: "hard",
-              height: "100%",
-              width: "100%",
-              textOverflow: "ellipsis",
-              whiteSpace: "wrap"
-            }}
-            ref="newText"
-          />
+            className="link"
+          >
+            <textarea
+              maxLength="65"
+              onClick={this.handleClick}
+              onKeyPress={this.handleKeyPress}
+              defaultValue={
+                this.state.editable ? this.state.value : this.state.value
+              }
+              disabled={!this.state.editable}
+              style={{
+                backgroundColor: "rgba(0, 0, 0, 0)",
+                borderColor: "rgba(0, 0, 0, 0)",
+                outline: "none",
+                fontFamily: "Ubuntu",
+                fontSize: "20px",
+                wrap: "hard",
+                height: "100%",
+                width: "100%",
+                textOverflow: "ellipsis",
+                whiteSpace: "wrap",
+                textDecoration: !this.state.editable ? "underline" : ""
+              }}
+              ref="newText"
+            />
+          </a>
         </div>
       </Draggable>
     );

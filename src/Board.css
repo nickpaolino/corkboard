@@ -33,3 +33,7 @@ div.note > span {
 div.note button {
   margin: 2px;
 }
+
+a {
+  text-decoration: underline !important;
+}
