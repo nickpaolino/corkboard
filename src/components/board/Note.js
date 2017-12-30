@@ -137,6 +137,11 @@ class Note extends Component {
     this.setState({ link });
   };
 
+  handleLinkRemove = () => {
+    this.setState({ link: "" });
+    this.handleClose();
+  };
+
   modalLink = () => {
     return (
       <Modal
@@ -170,6 +175,9 @@ class Note extends Component {
                 {this.state.link}
               </a>
             </h4>
+            <Button onClick={this.handleLinkRemove} basic color="red">
+              <Icon name="remove" /> Remove Current Link
+            </Button>
           </Modal.Content>
         ) : (
           ""
