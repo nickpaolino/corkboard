@@ -97,8 +97,7 @@ const deleteMedia = id => {
   }).then(res => res.json());
 };
 
-const updateMediaContent = (text, id) => {
-  const body = { caption: text };
+const updateMediaContent = (body, id) => {
   const jwt = localStorage.getItem("token");
   return fetch(`${url}media/${id}/change`, {
     headers: {

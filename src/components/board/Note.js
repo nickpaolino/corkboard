@@ -28,7 +28,7 @@ class Note extends Component {
       editable: !this.props.text,
       value: this.props.text,
       modalOpen: false,
-      link: ""
+      link: this.props.link
     };
   }
 
@@ -114,7 +114,7 @@ class Note extends Component {
   handleKeyPress = e => {
     if (e.key == "Enter") {
       // Persist to database here
-      this.updateNote(this.refs.newText.value);
+      this.updateNote(this.refs.newText.value, this.state.link);
       this.setState({
         editable: false,
         value: this.refs.newText.value
@@ -122,8 +122,9 @@ class Note extends Component {
     }
   };
 
-  updateNote = text => {
-    api.media.updateMediaContent(text, this.props.id);
+  updateNote = (caption, link) => {
+    const body = { caption, link };
+    api.media.updateMediaContent(body, this.props.id);
   };
 
   handleOpen = () => this.setState({ modalOpen: true });
@@ -134,10 +135,12 @@ class Note extends Component {
     this.handleClose();
     // Add link here
     const link = this.linkInput.inputRef.value;
+    this.updateNote(this.state.value, link);
     this.setState({ link });
   };
 
   handleLinkRemove = () => {
+    this.updateNote(this.state.value, "");
     this.setState({ link: "" });
     this.handleClose();
   };

@@ -35,6 +35,7 @@ class Board extends Component {
               updateNote={this.updateNote}
               updated={note.updated ? true : false}
               text={note.caption ? note.caption : undefined}
+              link={note.link ? note.link : ""}
             />
           );
         })}
