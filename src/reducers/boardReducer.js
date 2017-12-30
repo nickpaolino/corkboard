@@ -35,7 +35,6 @@ const boardReducer = (state = initialState, action) => {
       const filteredMedia = state.notes.filter(
         note => note.id !== action.media.id
       );
-      const deletedNotes = [...state.deletedNotes, action.media];
       return {
         ...state,
         justFetchedBoard: false,

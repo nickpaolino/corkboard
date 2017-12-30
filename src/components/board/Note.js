@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import { Icon, Form, TextArea, Button } from "semantic-ui-react";
+import {
+  Icon,
+  Form,
+  TextArea,
+  Button,
+  Modal,
+  Header,
+  Input
+} from "semantic-ui-react";
 import { connect } from "react-redux";
 import { api } from "../../services/api";
 import "../../Board.css";
@@ -18,7 +26,8 @@ class Note extends Component {
       deleted: false,
       movedNotes: [],
       editable: !this.props.text,
-      value: this.props.text
+      value: this.props.text,
+      modalOpen: false
     };
   }
 
@@ -63,7 +72,7 @@ class Note extends Component {
       let style = this.style;
       let transform = this.extractTransform(this.noteDiv.style.transform);
       this.createNewStyle(style, transform);
-      // This is triggers a patch request
+      // This triggers a patch request
       this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
       if (!this.state.movedNotes.includes(this.props.id)) {
         this.setState({
@@ -116,6 +125,45 @@ class Note extends Component {
     api.media.updateMediaContent(text, this.props.id);
   };
 
+  handleOpen = () => this.setState({ modalOpen: true });
+
+  handleClose = () => this.setState({ modalOpen: false });
+
+  addLink = () => {
+    this.handleClose();
+    // Add link here
+  };
+
+  modalLink = () => {
+    return (
+      <Modal
+        trigger={<Icon name="linkify" onClick={this.handleOpen} />}
+        size="small"
+        open={this.state.modalOpen}
+        onClose={this.handleClose}
+      >
+        <Header
+          icon="linkify"
+          content={`Add a link to your ${this.props.board.subject} board`}
+        />
+        <Modal.Actions>
+          <Input
+            style={{ padding: "10px" }}
+            fluid
+            size="small"
+            placeholder="Link..."
+          />
+          <Button onClick={this.handleClose} basic color="red">
+            <Icon name="remove" /> Cancel
+          </Button>
+          <Button onClick={this.addLink} color="green">
+            <Icon name="checkmark" /> Add
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
   render() {
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0" };
@@ -134,6 +182,7 @@ class Note extends Component {
             name="delete"
           />
           <Icon name="pencil" onClick={this.handleEdit} />
+          {this.modalLink()}
           <textarea
             maxLength="65"
             onClick={this.handleClick}
