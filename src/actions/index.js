@@ -78,7 +78,6 @@ export const getBoards = () => {
   const token = localStorage.getItem("token");
   return dispatch => {
     api.users.getBoards().then(user => {
-      console.log(user.boards);
       const boards = user.boards;
       dispatch({ type: "UPDATE_BOARDS", boards });
     });

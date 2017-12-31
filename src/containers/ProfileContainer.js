@@ -26,6 +26,7 @@ class ProfileContainer extends Component {
   };
 
   render() {
+    console.log(this.props.user);
     return (
       <div>
         <div className="home">
@@ -48,9 +49,7 @@ class ProfileContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: {
-      user: state.auth.currentUser
-    }
+    user: state.auth.currentUser
   };
 };
 

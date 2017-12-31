@@ -81,6 +81,7 @@ class BulletinContainer extends Component {
   };
 
   render() {
+    console.log(this.state.notes);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>

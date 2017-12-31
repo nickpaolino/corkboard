@@ -110,6 +110,30 @@ const updateMediaContent = (body, id) => {
   }).then(res => res.json());
 };
 
+const randomLeft = () => {
+  return Math.ceil(Math.random() * 480 + 20) + "px";
+};
+
+const randomTop = () => {
+  return Math.ceil(Math.random() * 200) + "px";
+};
+
+const createBoardPositions = boardUserIds => {
+  const jwt = localStorage.getItem("token");
+  let body;
+  boardUserIds.forEach(id => {
+    body = { id, left_position: randomLeft(), top_position: randomTop() };
+    fetch(`${url}board_users/${id}`, {
+      headers: {
+        ...headers,
+        Authorization: jwt
+      },
+      method: "PATCH",
+      body: JSON.stringify(body)
+    });
+  });
+};
+
 export const api = {
   auth: {
     login,
@@ -122,7 +146,8 @@ export const api = {
   },
   boards: {
     getBoard,
-    createBoard
+    createBoard,
+    createBoardPositions
   },
   media: {
     createMedia,

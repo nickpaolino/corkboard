@@ -3,6 +3,7 @@ import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import UserList from "../components/create/UserList";
+import { api } from "../services/api";
 
 class CreateBoardContainer extends Component {
   constructor(props) {
@@ -85,7 +86,11 @@ class CreateBoardContainer extends Component {
     // Create board and then fetch the updated list of the user's boards for the Navbar
     this.props
       .createBoard(body, this.props.history)
-      .then(() => this.props.getBoards());
+      .then(() => this.props.getBoards())
+      .then(() =>
+        api.boards.createBoardPositions(this.props.board.board_users)
+      );
+    // then create board_user patch requests to submit them as randomly placed on each person's home board
   };
 
   render() {
@@ -126,7 +131,8 @@ const mapStateToProps = state => {
   return {
     subjects: state.auth.currentUser.subjects,
     users: state.auth.users,
-    currentUser: state.auth.currentUser
+    currentUser: state.auth.currentUser,
+    board: state.board.currentBoard
   };
 };
 
