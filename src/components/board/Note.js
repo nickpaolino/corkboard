@@ -73,7 +73,11 @@ class Note extends Component {
       let style = this.style;
       let transform = this.extractTransform(this.noteDiv.style.transform);
       this.createNewStyle(style, transform);
-      this.props.updateNote({ ...this.transformedStyle, id: this.props.id });
+      this.props.updateNote({
+        ...this.transformedStyle,
+        id: this.props.id,
+        isBoard: this.props.isBoard
+      });
       if (!this.state.movedNotes.includes(this.props.id)) {
         this.setState({
           movedNotes: [...this.state.movedNotes, this.props.id]
@@ -197,6 +201,7 @@ class Note extends Component {
   };
 
   render() {
+    console.log(this.style);
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0" };
     }
@@ -208,15 +213,23 @@ class Note extends Component {
           ref={div => (this.noteDiv = div)}
           style={this.style}
         >
-          <Icon
-            ref={div => (this.deleteButton = div)}
-            onClick={this.handleDelete}
-            name="delete"
-          />
-          <Icon name="pencil" onClick={this.handleEdit} />
-          {this.modalLink()}
+          {this.props.isBoard ? (
+            ""
+          ) : (
+            <Icon
+              ref={div => (this.deleteButton = div)}
+              onClick={this.handleDelete}
+              name="delete"
+            />
+          )}
+          {this.props.isBoard ? (
+            <Icon name="block layout" style={{ paddingLeft: "5px" }} />
+          ) : (
+            <Icon name="pencil" onClick={this.handleEdit} />
+          )}
+          {this.props.isBoard ? "" : this.modalLink()}
           <a
-            target="_blank"
+            target={this.props.isBoard ? "" : "_blank"}
             href={
               !!this.state.link && !this.state.editable ? this.state.link : null
             }

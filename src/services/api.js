@@ -118,12 +118,23 @@ const randomTop = () => {
   return Math.ceil(Math.random() * 200) + "px";
 };
 
-const createBoardPositions = boardUserIds => {
+const createBoardPositions = (boardUserIds, body) => {
   const jwt = localStorage.getItem("token");
-  let body;
-  boardUserIds.forEach(id => {
-    body = { id, left_position: randomLeft(), top_position: randomTop() };
-    fetch(`${url}board_users/${id}`, {
+  if (boardUserIds) {
+    let body;
+    boardUserIds.forEach(id => {
+      body = { id, left_position: randomLeft(), top_position: randomTop() };
+      fetch(`${url}board_users/${id}`, {
+        headers: {
+          ...headers,
+          Authorization: jwt
+        },
+        method: "PATCH",
+        body: JSON.stringify(body)
+      });
+    });
+  } else {
+    fetch(`${url}/update_board_positions`, {
       headers: {
         ...headers,
         Authorization: jwt
@@ -131,7 +142,7 @@ const createBoardPositions = boardUserIds => {
       method: "PATCH",
       body: JSON.stringify(body)
     });
-  });
+  }
 };
 
 export const api = {

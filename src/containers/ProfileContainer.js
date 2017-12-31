@@ -6,14 +6,7 @@ import "../home.css";
 
 class ProfileContainer extends Component {
   state = {
-    notes: [
-      {
-        id: 5000,
-        subject: "Mozart",
-        left_position: "20px",
-        top_position: "0px"
-      }
-    ],
+    notes: [],
     reset: false
   };
 
@@ -25,8 +18,26 @@ class ProfileContainer extends Component {
     }
   };
 
+  componentDidMount() {
+    if (this.props.user.boards) {
+      console.log("Boards are", this.props.user.boards);
+      const notes = this.props.user.boards.map(board => {
+        return {
+          id: board.id,
+          caption: board.subject,
+          left_position: board.left_position,
+          top_position: board.top_position,
+          link: `http://localhost:3001/boards/${board.id}`,
+          isBoard: true
+        };
+      });
+
+      this.setState({ notes });
+    }
+  }
+
   render() {
-    console.log(this.props.user);
+    console.log(this.props.user.boards);
     return (
       <div>
         <div className="home">
