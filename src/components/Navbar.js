@@ -3,13 +3,14 @@ import { Button, Dropdown, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as actions from "../actions/boards";
+import logo from "../logo.png";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeItem: "home"
+      activeItem: "boards"
     };
   }
 
@@ -26,28 +27,44 @@ class Navbar extends Component {
     }
   };
 
+  handleLogoClick = () => {
+    this.props.history.push("/");
+  };
+
   render() {
     const { activeItem } = this.state;
     const { loggedIn, user } = this.props;
 
     return (
       <Menu className="navbar" style={{ fontFamily: "Ubuntu" }}>
-        <Menu.Item
-          name="home"
-          active={activeItem === "home"}
-          onClick={this.handleItemClick}
-          disabled={!loggedIn}
-          as={Link}
-          to="/"
-        />
-        <Menu.Item
-          name="create-new-board"
-          active={activeItem === "create-new-board"}
-          onClick={this.handleItemClick}
-          disabled={!loggedIn}
-          as={Link}
-          to="/boards/new"
-        />
+        <Menu.Item style={{ fontSize: "20px" }} onClick={this.handleLogoClick}>
+          corkboard
+        </Menu.Item>
+        {loggedIn ? (
+          <Menu.Item
+            name="boards"
+            active={activeItem === "boards"}
+            onClick={this.handleItemClick}
+            disabled={!loggedIn}
+            as={Link}
+            to="/"
+          />
+        ) : (
+          ""
+        )}
+        {loggedIn ? (
+          <Menu.Item
+            name="create-new-board"
+            active={activeItem === "create-new-board"}
+            onClick={this.handleItemClick}
+            disabled={!loggedIn}
+            as={Link}
+            to="/boards/new"
+          />
+        ) : (
+          ""
+        )}
+
         <Menu.Menu position="left">
           {this.props.user.boards ? (
             <Dropdown disabled={!loggedIn} item text="Your Boards">
@@ -71,9 +88,6 @@ class Navbar extends Component {
         </Menu.Menu>
         {loggedIn ? (
           <Menu.Menu style={{ fontFamily: "Ubuntu" }} position="right">
-            <Menu.Item style={{ fontSize: "20px", fontFamily: "Ubuntu" }}>
-              <img src="../../public/logo.png" alt="corkboard" />
-            </Menu.Item>
             <Menu.Item>Hi, {user.username}</Menu.Item>
             <Menu.Item>
               <Link to="/logout">
