@@ -25,7 +25,6 @@ class Board extends Component {
     return (
       <div className="board">
         {this.props.notes.map((note, index) => {
-          console.log("In Board note is", note);
           return (
             <Note
               key={index}
@@ -38,6 +37,7 @@ class Board extends Component {
               text={note.caption ? note.caption : undefined}
               link={note.link ? note.link : ""}
               isBoard={note.isBoard ? true : false}
+              history={this.props.history ? this.props.history : null}
             />
           );
         })}

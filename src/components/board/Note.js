@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { api } from "../../services/api";
+import * as actions from "../../actions/boards";
 import "../../Board.css";
 
 class Note extends Component {
@@ -148,6 +149,10 @@ class Note extends Component {
     this.handleClose();
   };
 
+  handleRedirect = () => {
+    this.props.getBoard(this.props.id, this.props.history);
+  };
+
   modalLink = () => {
     return (
       <Modal
@@ -201,7 +206,6 @@ class Note extends Component {
   };
 
   render() {
-    console.log(this.style);
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0" };
     }
@@ -231,8 +235,13 @@ class Note extends Component {
           <a
             target={this.props.isBoard ? "" : "_blank"}
             href={
-              !!this.state.link && !this.state.editable ? this.state.link : null
+              this.props.isBoard
+                ? null
+                : !!this.state.link && !this.state.editable
+                  ? this.state.link
+                  : null
             }
+            onClick={this.props.isBoard ? this.handleRedirect : null}
           >
             <textarea
               maxLength="65"
@@ -272,4 +281,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Note);
+export default connect(mapStateToProps, actions)(Note);

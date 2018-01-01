@@ -20,7 +20,6 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     if (this.props.user.boards) {
-      console.log("Boards are", this.props.user.boards);
       const notes = this.props.user.boards.map(board => {
         return {
           id: board.id,
@@ -37,7 +36,6 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    console.log(this.props.user.boards);
     return (
       <div>
         <div className="home">
@@ -46,6 +44,7 @@ class ProfileContainer extends Component {
             notes={this.state.notes}
             handleDelete={this.handleDelete}
             mapNotes={this.mapNotes}
+            history={this.props.history}
           />
           <div className="menu">
             <button className="add" onClick={this.add}>
