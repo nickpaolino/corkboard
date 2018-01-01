@@ -35,6 +35,10 @@ class ProfileContainer extends Component {
     }
   }
 
+  add = () => {
+    this.props.history.push("/boards/new");
+  };
+
   render() {
     return (
       <div>
