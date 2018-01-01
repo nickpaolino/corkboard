@@ -3,6 +3,7 @@ import Board from "../components/board/Board";
 import "../Bulletin.css";
 import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
+import { Modal, Icon, Header, Button, List } from "semantic-ui-react";
 
 class BulletinContainer extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class BulletinContainer extends Component {
     this.state = {
       notes: [],
       reset: false,
-      nextProps: {}
+      nextProps: {},
+      modalOpen: false
     };
   }
 
@@ -80,6 +82,53 @@ class BulletinContainer extends Component {
     this.props.deleteNote(id, this.props.board.id);
   };
 
+  handleOpen = () => this.setState({ modalOpen: true });
+
+  handleClose = () => this.setState({ modalOpen: false });
+
+  showMemberModal = () => {
+    console.log(this.props.board.users);
+    return (
+      <Modal
+        trigger={
+          <button className="members" onClick={this.handleOpen}>
+            Members
+          </button>
+        }
+        size="mini"
+        open={this.state.modalOpen}
+      >
+        <Header
+          style={{
+            fontFamily: "Ubuntu"
+          }}
+        >
+          <Icon name="thumb tack" />Members
+        </Header>
+        <Modal.Content>
+          {this.props.board.users.map(user => {
+            return (
+              <div
+                style={{
+                  fontFamily: "Ubuntu",
+                  fontSize: "15px",
+                  padding: "5px"
+                }}
+              >
+                {user.username}
+              </div>
+            );
+          })}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button basic color="red" onClick={this.handleClose}>
+            <Icon name="hide" /> Hide
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
   render() {
     console.log(this.state.notes);
     return (
@@ -94,6 +143,7 @@ class BulletinContainer extends Component {
           <button className="add" onClick={this.add}>
             +
           </button>
+          <div className="friends list">{this.showMemberModal()}</div>
         </div>
       </div>
     );
