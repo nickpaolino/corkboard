@@ -31,7 +31,7 @@ class Navbar extends Component {
     const { loggedIn, user } = this.props;
 
     return (
-      <Menu className="navbar">
+      <Menu className="navbar" style={{ fontFamily: "Ubuntu" }}>
         <Menu.Item
           name="home"
           active={activeItem === "home"}
@@ -70,7 +70,10 @@ class Navbar extends Component {
           )}
         </Menu.Menu>
         {loggedIn ? (
-          <Menu.Menu position="right">
+          <Menu.Menu style={{ fontFamily: "Ubuntu" }} position="right">
+            <Menu.Item style={{ fontSize: "20px", fontFamily: "Ubuntu" }}>
+              <img src="../../public/logo.png" alt="corkboard" />
+            </Menu.Item>
             <Menu.Item>Hi, {user.username}</Menu.Item>
             <Menu.Item>
               <Link to="/logout">
@@ -79,7 +82,7 @@ class Navbar extends Component {
             </Menu.Item>
           </Menu.Menu>
         ) : (
-          <Menu.Menu position="right">
+          <Menu.Menu style={{ fontFamily: "Ubuntu" }} position="right">
             <Menu.Item>
               <Link to="/login">
                 <Button>Login</Button>
