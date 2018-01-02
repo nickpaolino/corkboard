@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
 import { Modal, Icon, Header, Button, List, Input } from "semantic-ui-react";
 import UserList from "../components/create/UserList";
+import { api } from "../services/api";
 
 class BulletinContainer extends Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class BulletinContainer extends Component {
       reset: false,
       nextProps: {},
       modalOpen: false,
-      invite: false,
-      users: []
+      users: [],
+      invitedUsers: []
     };
   }
 
@@ -93,14 +94,6 @@ class BulletinContainer extends Component {
 
   handleClose = () => this.setState({ modalOpen: false });
 
-  inviteUser = () => {
-    this.setState({ invite: true });
-  };
-
-  setInviteFalse = () => {
-    this.setState({ invite: false });
-  };
-
   getOtherUsers = () => {
     const userIds = this.props.board.users.map(user => user.id);
     const otherUsers = this.props.users.filter(user => {
@@ -114,19 +107,33 @@ class BulletinContainer extends Component {
     this.setState({ users });
   };
 
-  addUser = users => {
-    this.setState({ users });
+  addUser = invitedUsers => {
+    this.setState({ invitedUsers });
+  };
+
+  inviteUsers = () => {
+    if (!!this.state.invitedUsers.length) {
+      this.props
+        .addUsersToBoard(this.props.board.id, this.state.invitedUsers)
+        .then(() =>
+          api.boards.createBoardPositions(this.props.board.board_users)
+        );
+      this.handleClose();
+    }
   };
 
   showMemberModal = () => {
     return (
       <Modal
         trigger={
-          <button className="members" onClick={this.handleOpen}>
-            Members
+          <button
+            style={{ width: "130px" }}
+            className="members"
+            onClick={this.handleOpen}
+          >
+            Members: {this.props.board.users.length}
           </button>
         }
-        onClose={this.setInviteFalse}
         size="mini"
         open={this.state.modalOpen}
       >
@@ -155,7 +162,7 @@ class BulletinContainer extends Component {
           <div style={{ paddingTop: "10px" }}>
             <UserList users={this.state.users} addUser={this.addUser} isModal />
             <Button
-              style={{ paddingTop: "10px" }}
+              style={{ marginTop: "10px" }}
               color="green"
               onClick={this.inviteUsers}
             >

@@ -11,7 +11,9 @@ class UserList extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    this.getUsers(nextProps.users);
+    if (!this.props.isModal) {
+      this.getUsers(nextProps.users);
+    }
   }
 
   componentDidMount() {
@@ -40,7 +42,6 @@ class UserList extends Component {
         };
       });
     }
-
     this.setState({ options });
   };
 
@@ -62,7 +63,7 @@ class UserList extends Component {
     const { multiple, options, search } = this.state;
     return (
       <Grid>
-        <Grid.Column width={8}>
+        <Grid.Column width={this.props.isModal ? 15 : 8}>
           <Dropdown
             fluid
             selection

@@ -134,7 +134,7 @@ const createBoardPositions = (boardUserIds, body) => {
       });
     });
   } else {
-    fetch(`${url}/update_board_positions`, {
+    fetch(`${url}update_board_positions`, {
       headers: {
         ...headers,
         Authorization: jwt
@@ -143,6 +143,19 @@ const createBoardPositions = (boardUserIds, body) => {
       body: JSON.stringify(body)
     });
   }
+};
+
+const addUsers = (boardId, users) => {
+  const jwt = localStorage.getItem("token");
+  const body = { users };
+  return fetch(`${url}boards/${boardId}`, {
+    headers: {
+      ...headers,
+      Authorization: jwt
+    },
+    method: "PATCH",
+    body: JSON.stringify(body)
+  }).then(res => res.json());
 };
 
 export const api = {
@@ -158,7 +171,8 @@ export const api = {
   boards: {
     getBoard,
     createBoard,
-    createBoardPositions
+    createBoardPositions,
+    addUsers
   },
   media: {
     createMedia,

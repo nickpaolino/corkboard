@@ -65,3 +65,11 @@ export const justFetchedBoard = () => {
     dispatch({ type: "JUST_FETCHED_BOARD" });
   };
 };
+
+export const addUsersToBoard = (boardId, users) => {
+  return dispatch => {
+    return api.boards.addUsers(boardId, users).then(board => {
+      dispatch({ type: "GET_CURRENT_BOARD", board });
+    });
+  };
+};
