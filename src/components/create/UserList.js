@@ -14,14 +14,32 @@ class UserList extends Component {
     this.getUsers(nextProps.users);
   }
 
+  componentDidMount() {
+    if (this.props.isModal && !!this.props.users.length) {
+      this.getUsers(this.props.users);
+    }
+  }
+
   getUsers = users => {
-    const options = users.map(user => {
-      return {
-        key: user.username,
-        text: user.username,
-        value: user.username
-      };
-    });
+    let options;
+
+    if (!this.props.isModal) {
+      options = users.map(user => {
+        return {
+          key: user.username,
+          text: user.username,
+          value: user.username
+        };
+      });
+    } else {
+      options = users.map(user => {
+        return {
+          key: user,
+          text: user,
+          value: user
+        };
+      });
+    }
 
     this.setState({ options });
   };
@@ -42,7 +60,6 @@ class UserList extends Component {
 
   render() {
     const { multiple, options, search } = this.state;
-
     return (
       <Grid>
         <Grid.Column width={8}>

@@ -6,7 +6,6 @@ import BulletinContainer from "./BulletinContainer";
 
 class BoardDisplayContainer extends Component {
   componentDidMount() {
-    console.log(this.props.board.id);
     if (!this.props.board.id) this.props.getBoard(this.props.boardId);
   }
 

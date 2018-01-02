@@ -3,7 +3,8 @@ import Board from "../components/board/Board";
 import "../Bulletin.css";
 import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
-import { Modal, Icon, Header, Button, List } from "semantic-ui-react";
+import { Modal, Icon, Header, Button, List, Input } from "semantic-ui-react";
+import UserList from "../components/create/UserList";
 
 class BulletinContainer extends Component {
   constructor(props) {
@@ -13,13 +14,16 @@ class BulletinContainer extends Component {
       notes: [],
       reset: false,
       nextProps: {},
-      modalOpen: false
+      modalOpen: false,
+      invite: false,
+      users: []
     };
   }
 
   componentDidMount() {
     // fetch notes for that board
     this.props.fetchNotes(this.props.board.id);
+    this.props.getUsers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -82,12 +86,39 @@ class BulletinContainer extends Component {
     this.props.deleteNote(id, this.props.board.id);
   };
 
-  handleOpen = () => this.setState({ modalOpen: true });
+  handleOpen = () => {
+    this.setState({ modalOpen: true });
+    this.getOtherUsers();
+  };
 
   handleClose = () => this.setState({ modalOpen: false });
 
+  inviteUser = () => {
+    this.setState({ invite: true });
+  };
+
+  setInviteFalse = () => {
+    this.setState({ invite: false });
+  };
+
+  getOtherUsers = () => {
+    const userIds = this.props.board.users.map(user => user.id);
+    const otherUsers = this.props.users.filter(user => {
+      return !userIds.includes(user.id);
+    });
+
+    const users = otherUsers.map(user => {
+      return user.username;
+    });
+
+    this.setState({ users });
+  };
+
+  addUser = users => {
+    this.setState({ users });
+  };
+
   showMemberModal = () => {
-    console.log(this.props.board.users);
     return (
       <Modal
         trigger={
@@ -95,6 +126,7 @@ class BulletinContainer extends Component {
             Members
           </button>
         }
+        onClose={this.setInviteFalse}
         size="mini"
         open={this.state.modalOpen}
       >
@@ -109,6 +141,7 @@ class BulletinContainer extends Component {
           {this.props.board.users.map(user => {
             return (
               <div
+                key={user.id}
                 style={{
                   fontFamily: "Ubuntu",
                   fontSize: "15px",
@@ -119,6 +152,16 @@ class BulletinContainer extends Component {
               </div>
             );
           })}
+          <div style={{ paddingTop: "10px" }}>
+            <UserList users={this.state.users} addUser={this.addUser} isModal />
+            <Button
+              style={{ paddingTop: "10px" }}
+              color="green"
+              onClick={this.inviteUsers}
+            >
+              <Icon name="user plus" /> Invite
+            </Button>
+          </div>
         </Modal.Content>
         <Modal.Actions>
           <Button basic color="red" onClick={this.handleClose}>
@@ -130,7 +173,6 @@ class BulletinContainer extends Component {
   };
 
   render() {
-    console.log(this.state.notes);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>
@@ -154,7 +196,8 @@ const mapStateToProps = state => {
   return {
     notesList: state.board.notes,
     board: state.board.currentBoard,
-    user: state.auth.currentUser
+    user: state.auth.currentUser,
+    users: state.auth.users
   };
 };
 

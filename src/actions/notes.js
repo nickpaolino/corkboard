@@ -8,6 +8,15 @@ export const createNote = medium => {
   };
 };
 
+export const getUsers = () => {
+  const token = localStorage.getItem("token");
+  return dispatch => {
+    api.users.getAllUsers(token).then(users => {
+      dispatch({ type: "SET_USERS", users });
+    });
+  };
+};
+
 export const updateNote = (medium, userId) => {
   return dispatch => {
     if (medium.isBoard) {
