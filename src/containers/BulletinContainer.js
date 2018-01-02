@@ -146,6 +146,7 @@ class BulletinContainer extends Component {
         </Header>
         <Modal.Content>
           {this.props.board.users.map(user => {
+            const isCurrentUser = this.props.currentUser.id === user.id;
             return (
               <div
                 key={user.id}
@@ -155,7 +156,7 @@ class BulletinContainer extends Component {
                   padding: "5px"
                 }}
               >
-                {user.username}
+                {isCurrentUser ? "You" : user.username}
               </div>
             );
           })}
@@ -204,7 +205,8 @@ const mapStateToProps = state => {
     notesList: state.board.notes,
     board: state.board.currentBoard,
     user: state.auth.currentUser,
-    users: state.auth.users
+    users: state.auth.users,
+    currentUser: state.auth.currentUser
   };
 };
 

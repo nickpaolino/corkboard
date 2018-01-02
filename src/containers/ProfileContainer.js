@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import withAuth from "../components/hocs/withAuth";
 import Board from "../components/board/Board";
+import { Modal, Button, Icon } from "semantic-ui-react";
 import "../home.css";
+import CreateBoardContainer from "./CreateBoardContainer";
 
 class ProfileContainer extends Component {
   state = {
     notes: [],
-    reset: false
+    reset: false,
+    modalOpen: false
   };
 
   handleDelete = () => {};
@@ -39,6 +42,33 @@ class ProfileContainer extends Component {
     this.props.history.push("/boards/new");
   };
 
+  handleOpen = () => this.setState({ modalOpen: true });
+
+  handleClose = () => this.setState({ modalOpen: false });
+
+  showModal = () => {
+    return (
+      <Modal
+        trigger={
+          <button className="add" onClick={this.handleOpen}>
+            +
+          </button>
+        }
+        size="small"
+        open={this.state.modalOpen}
+      >
+        <Modal.Content>
+          <CreateBoardContainer history={this.props.history} />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button basic color="red" onClick={this.handleClose}>
+            <Icon name="hide" /> Hide
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
   render() {
     return (
       <div>
@@ -50,11 +80,7 @@ class ProfileContainer extends Component {
             mapNotes={this.mapNotes}
             history={this.props.history}
           />
-          <div className="menu">
-            <button className="add" onClick={this.add}>
-              +
-            </button>
-          </div>
+          <div className="menu">{this.showModal()}</div>
         </div>
       </div>
     );

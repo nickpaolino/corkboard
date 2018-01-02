@@ -111,16 +111,8 @@ class CreateBoardContainer extends Component {
             />{" "}
           </Form.Field>
           <UserList users={this.props.users} addUser={this.addUser} />
-          <div className="checkbox">
-            <Form.Field inline>
-              <Checkbox
-                label="This board is open to the public"
-                defaultChecked
-                onChange={this.handleCheck}
-              />
-            </Form.Field>
-          </div>
-          <Button>Create</Button>
+          <div className="checkbox" />
+          <Button>Create Board</Button>
         </Form>
       </div>
     );

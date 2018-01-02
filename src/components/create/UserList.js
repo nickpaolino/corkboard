@@ -63,7 +63,7 @@ class UserList extends Component {
     const { multiple, options, search } = this.state;
     return (
       <Grid>
-        <Grid.Column width={this.props.isModal ? 15 : 8}>
+        <Grid.Column width={this.props.isModal ? 15 : 10}>
           <Dropdown
             fluid
             selection
@@ -71,6 +71,7 @@ class UserList extends Component {
             search={search}
             options={options}
             placeholder="Add Users"
+            noResultsMessage="No Users Found"
             onChange={this.handleChange}
             onSearchChange={this.handleSearchChange}
           />

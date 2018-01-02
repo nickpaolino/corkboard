@@ -6,19 +6,6 @@ import * as actions from "../actions/boards";
 import logo from "../logo.png";
 
 class Navbar extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activeItem: "boards"
-    };
-  }
-
-  handleItemClick = (e, obj) => {
-    // Sets the state with the navbar item that is currently selected
-    this.setState({ activeItem: obj.name });
-  };
-
   handleDropdownClick = e => {
     const clickedBoardId = e.target.id;
     const currentBoardId = this.props.history.location.pathname.split("/")[2];
@@ -32,7 +19,6 @@ class Navbar extends Component {
   };
 
   render() {
-    const { activeItem } = this.state;
     const { loggedIn, user } = this.props;
 
     return (
@@ -42,8 +28,7 @@ class Navbar extends Component {
         </Menu.Item>
         {loggedIn ? (
           <Menu.Item
-            name="boards"
-            active={activeItem === "boards"}
+            name="all boards"
             onClick={this.handleItemClick}
             disabled={!loggedIn}
             as={Link}
@@ -52,19 +37,6 @@ class Navbar extends Component {
         ) : (
           ""
         )}
-        {loggedIn ? (
-          <Menu.Item
-            name="create-new-board"
-            active={activeItem === "create-new-board"}
-            onClick={this.handleItemClick}
-            disabled={!loggedIn}
-            as={Link}
-            to="/boards/new"
-          />
-        ) : (
-          ""
-        )}
-
         <Menu.Menu position="left">
           {this.props.user.boards ? (
             <Dropdown disabled={!loggedIn} item text="Your Boards">
