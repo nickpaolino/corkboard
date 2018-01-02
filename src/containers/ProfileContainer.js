@@ -7,11 +7,15 @@ import "../home.css";
 import CreateBoardContainer from "./CreateBoardContainer";
 
 class ProfileContainer extends Component {
-  state = {
-    notes: [],
-    reset: false,
-    modalOpen: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      notes: [],
+      reset: false,
+      modalOpen: false
+    };
+  }
 
   handleDelete = () => {};
 
