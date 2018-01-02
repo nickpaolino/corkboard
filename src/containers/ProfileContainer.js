@@ -27,18 +27,28 @@ class ProfileContainer extends Component {
 
   componentDidMount() {
     if (this.props.user.boards) {
-      const notes = this.props.user.boards.map(board => {
-        return {
-          id: board.id,
-          caption: board.subject,
-          left_position: board.left_position,
-          top_position: board.top_position,
-          link: `http://localhost:3001/boards/${board.id}`,
-          isBoard: true
-        };
-      });
+      this.filterNotes(this.props.user.boards);
+    }
+  }
 
-      this.setState({ notes });
+  filterNotes = boards => {
+    const notes = boards.map(board => {
+      return {
+        id: board.id,
+        caption: board.subject,
+        left_position: board.left_position,
+        top_position: board.top_position,
+        link: `http://localhost:3001/boards/${board.id}`,
+        isBoard: true
+      };
+    });
+
+    this.setState({ notes });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.user.boards.length !== nextProps.user.boards.length) {
+      this.filterNotes(nextProps.user.boards);
     }
   }
 
@@ -66,7 +76,7 @@ class ProfileContainer extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button basic color="red" onClick={this.handleClose}>
-            <Icon name="hide" /> Hide
+            <Icon name="x" /> Close
           </Button>
         </Modal.Actions>
       </Modal>

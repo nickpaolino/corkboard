@@ -28,14 +28,6 @@ export const updateNote = (medium, userId) => {
       };
       api.boards.createBoardPositions(null, body);
       // Make patch request to board_user here to update position of board on user home page
-      console.log(
-        "This is a board:",
-        medium.isBoard,
-        "with board id:",
-        medium.id,
-        "and user id:",
-        userId
-      );
     } else {
       return api.media.updateMedia(medium).then(medium => {
         dispatch({ type: "UPDATE_CURRENT_NOTE", medium });
@@ -70,6 +62,14 @@ export const addUsersToBoard = (boardId, users) => {
   return dispatch => {
     return api.boards.addUsers(boardId, users).then(board => {
       dispatch({ type: "GET_CURRENT_BOARD", board });
+    });
+  };
+};
+
+export const deleteBoard = (id, history) => {
+  return dispatch => {
+    api.boards.deleteBoard(id).then(board => {
+      if (history) history.push(`/`);
     });
   };
 };

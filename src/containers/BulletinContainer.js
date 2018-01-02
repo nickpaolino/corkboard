@@ -15,7 +15,8 @@ class BulletinContainer extends Component {
       notes: [],
       reset: false,
       nextProps: {},
-      modalOpen: false,
+      memberModalOpen: false,
+      settingsModalOpen: false,
       users: [],
       invitedUsers: []
     };
@@ -88,11 +89,11 @@ class BulletinContainer extends Component {
   };
 
   handleOpen = () => {
-    this.setState({ modalOpen: true });
+    this.setState({ memberModalOpen: true });
     this.getOtherUsers();
   };
 
-  handleClose = () => this.setState({ modalOpen: false });
+  handleClose = () => this.setState({ memberModalOpen: false });
 
   getOtherUsers = () => {
     const userIds = this.props.board.users.map(user => user.id);
@@ -135,7 +136,7 @@ class BulletinContainer extends Component {
           </button>
         }
         size="mini"
-        open={this.state.modalOpen}
+        open={this.state.memberModalOpen}
       >
         <Header
           style={{
@@ -180,7 +181,52 @@ class BulletinContainer extends Component {
     );
   };
 
+  handleSettingsOpen = () => {
+    this.setState({ settingsModalOpen: true });
+  };
+
+  handleSettingsClose = () => this.setState({ settingsModalOpen: false });
+
+  handleBoardDelete = () => {
+    this.props.deleteBoard(this.props.board.id, this.props.history);
+  };
+
+  showSettingsModal = () => {
+    return (
+      <Modal
+        size="small"
+        trigger={
+          <button className="add" onClick={this.handleSettingsOpen}>
+            <Icon name="setting" />
+          </button>
+        }
+        open={this.state.settingsModalOpen}
+      >
+        <Modal.Content>
+          <Header
+            icon="setting"
+            content={`${this.props.board.subject} Board Settings`}
+          />
+          <Button
+            style={{ marginLeft: "40px", marginTop: "10px" }}
+            onClick={this.handleBoardDelete}
+            basic
+            color="red"
+          >
+            <Icon name="remove" /> Delete Board
+          </Button>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button basic color="red" onClick={this.handleSettingsClose}>
+            <Icon name="hide" /> Hide
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
   render() {
+    console.log(this.props);
     return (
       <div className="bulletin">
         <h3>{this.props.board.subject} Resources</h3>
@@ -194,6 +240,7 @@ class BulletinContainer extends Component {
             +
           </button>
           <div className="friends list">{this.showMemberModal()}</div>
+          <div style={{ paddingRight: "10px" }}>{this.showSettingsModal()}</div>
         </div>
       </div>
     );
