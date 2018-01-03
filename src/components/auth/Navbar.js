@@ -19,11 +19,13 @@ class Navbar extends Component {
   };
 
   handleLogoClick = () => {
+    // When the logo is clicked, redirect to the user home page
     this.props.history.push("/");
   };
 
   render() {
     const { loggedIn, user } = this.props;
+    const { boards } = user;
 
     return (
       <Menu className="navbar">
@@ -42,10 +44,10 @@ class Navbar extends Component {
           ""
         )}
         <Menu.Menu position="left">
-          {this.props.user.boards ? (
+          {boards ? (
             <Dropdown disabled={!loggedIn} item text="Your Boards">
               <Dropdown.Menu>
-                {this.props.user.boards.map(board => {
+                {boards.map(board => {
                   return (
                     <Dropdown.Item
                       key={board.id}

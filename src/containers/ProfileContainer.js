@@ -7,20 +7,15 @@ import "../home.css";
 import CreateBoardContainer from "./CreateBoardContainer";
 
 class ProfileContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      notes: [],
-      reset: false,
-      modalOpen: false
-    };
-  }
-
-  handleDelete = () => {};
+  state = {
+    notes: [],
+    reset: false,
+    modalOpen: false
+  };
 
   mapNotes = (notes, updatedBoard) => {
     if (notes) {
+      // updates notes' positions
       this.setState({ notes: [...notes.notesList], reset: false });
     }
   };
@@ -28,12 +23,14 @@ class ProfileContainer extends Component {
   componentDidMount() {
     if (this.props.user.boards) {
       const notes = this.props.user.boards.map(board => {
+        const { id, subject, left_position, top_position } = board;
+        // each board is mapped into a note object structured for the note component
         return {
-          id: board.id,
-          caption: board.subject,
-          left_position: board.left_position,
-          top_position: board.top_position,
-          link: `http://localhost:3001/boards/${board.id}`,
+          id,
+          caption: subject,
+          left_position,
+          top_position,
+          link: `http://localhost:3001/boards/${id}`,
           isBoard: true
         };
       });
@@ -42,15 +39,14 @@ class ProfileContainer extends Component {
     }
   }
 
-  add = () => {
-    this.props.history.push("/boards/new");
-  };
-
+  // sets the state to make sure that the modal is opened
   handleOpen = () => this.setState({ modalOpen: true });
 
+  // this does the same for the modal's close
   handleClose = () => this.setState({ modalOpen: false });
 
   showModal = () => {
+    // this modal renders the CreateBoardContainer component
     return (
       <Modal
         trigger={
@@ -78,9 +74,9 @@ class ProfileContainer extends Component {
       <div>
         <div className="home">
           <h3>Your Boards</h3>
+          {/* the boards are passed down to the board component which renders them as notes */}
           <Board
             notes={this.state.notes}
-            handleDelete={this.handleDelete}
             mapNotes={this.mapNotes}
             history={this.props.history}
           />
