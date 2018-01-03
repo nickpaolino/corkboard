@@ -20,7 +20,6 @@ class CreateBoardContainer extends Component {
   }
 
   componentDidMount = () => {
-    // Fetch all users
     this.props.getUsers();
 
     const subjectOptions = this.props.subjects.map(subject => {
