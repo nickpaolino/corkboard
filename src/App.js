@@ -1,23 +1,23 @@
 import React, { Component } from "react";
-import Login from "./components/Login";
-import Logout from "./components/Logout";
-import Signup from "./components/Signup";
+import { Login, Logout, Signup, Navbar } from "./components/auth";
 import { connect } from "react-redux";
 import ProfileContainer from "./containers/ProfileContainer";
 import BoardContainer from "./containers/BoardContainer";
 import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "./actions/auth";
-import Navbar from "./components/Navbar";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
+        {/* render navbar component with react router's history prop */}
         <Navbar history={this.props.history} />
         <Switch>
+          {/* the profile container displays a user's boards and allows them to create a new one */}
           <Route exact path="/" component={ProfileContainer} />} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          {/* the board container is the parent component for the board show and create page */}
           <Route path="/boards" component={BoardContainer} />
           <Route
             path="/logout"
@@ -36,13 +36,4 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    auth: {
-      loggedIn: state.auth.loggedIn,
-      user: state.auth.currentUser
-    }
-  };
-};
-
-export default withRouter(connect(mapStateToProps, actions)(App));
+export default withRouter(connect(null, actions)(App));

@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import { Button, Dropdown, Menu } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import * as actions from "../actions/boards";
-import logo from "../logo.png";
+import * as actions from "../../actions/boards";
 
 class Navbar extends Component {
   handleDropdownClick = e => {
+    // this takes the board id from the id of the clicked dropdown item
     const clickedBoardId = e.target.id;
+
+    // this takes the board id from the current url
     const currentBoardId = this.props.history.location.pathname.split("/")[2];
+
+    // if the clicked item isn't the same as the current board, then dispatch action to get board
     if (clickedBoardId !== currentBoardId) {
       this.props.getBoard(e.target.id, this.props.history);
     }
@@ -22,8 +26,8 @@ class Navbar extends Component {
     const { loggedIn, user } = this.props;
 
     return (
-      <Menu className="navbar" style={{ fontFamily: "Ubuntu" }}>
-        <Menu.Item style={{ fontSize: "20px" }} onClick={this.handleLogoClick}>
+      <Menu className="navbar">
+        <Menu.Item className="logo" onClick={this.handleLogoClick}>
           corkboard
         </Menu.Item>
         {loggedIn ? (

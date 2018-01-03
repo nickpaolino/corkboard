@@ -3,7 +3,7 @@ import Board from "../components/board/Board";
 import "../Bulletin.css";
 import { connect } from "react-redux";
 import * as actions from "../actions/notes.js";
-import { Modal, Icon, Header, Button, List, Input } from "semantic-ui-react";
+import { Modal, Icon, Header, Button } from "semantic-ui-react";
 import UserList from "../components/create/UserList";
 import { api } from "../services/api";
 
@@ -83,6 +83,7 @@ class BulletinContainer extends Component {
   };
 
   handleDelete = id => {
+    console.log("Note deleted", id);
     // Deletes the note from the database
     this.props.deleteNote(id, this.props.board.id);
   };

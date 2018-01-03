@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import {
-  Icon,
-  Form,
-  TextArea,
-  Button,
-  Modal,
-  Header,
-  Input
-} from "semantic-ui-react";
+import { Icon, Button, Modal, Header, Input } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { api } from "../../services/api";
 import * as actions from "../../actions/boards";
@@ -50,13 +42,15 @@ class Note extends Component {
   };
 
   createNewStyle = (style, transform) => {
-    const styleLeft = parseInt(style.left.slice(0, style.left.length - 2));
-    const styleTop = parseInt(style.top.slice(0, style.top.length - 2));
+    const styleLeft = parseInt(style.left.slice(0, style.left.length - 2), 10);
+    const styleTop = parseInt(style.top.slice(0, style.top.length - 2), 10);
     const transformLeft = parseInt(
-      transform.left.slice(0, transform.left.length - 2)
+      transform.left.slice(0, transform.left.length - 2),
+      10
     );
     const transformTop = parseInt(
-      transform.top.slice(0, transform.top.length - 2)
+      transform.top.slice(0, transform.top.length - 2),
+      10
     );
 
     const newLeft = styleLeft + transformLeft;
@@ -116,7 +110,7 @@ class Note extends Component {
   };
 
   handleKeyPress = e => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       // Persist to database here
       this.updateNote(this.refs.newText.value, this.state.link);
       this.setState({
@@ -207,7 +201,7 @@ class Note extends Component {
 
   render() {
     if (this.state.deleted) {
-      this.style = { ...this.style, opacity: "0" };
+      this.style = { ...this.style, opacity: "0", pointerEvents: "none" };
     }
     return (
       <Draggable onStop={this.handleStop} bounds="parent">

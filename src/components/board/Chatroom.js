@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ActionCable from "actioncable";
 import Message from "./Message";
+import { api } from "../../services/api";
 import "../../Chatroom.css";
 
 class Chatroom extends Component {
@@ -47,30 +48,18 @@ class Chatroom extends Component {
 
   fetchPreviousMessages = boardId => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/api/v1/messages/${boardId}`, {
-      headers: {
-        Authorization: token
-      }
-    })
-      .then(res => res.json())
+    api.chatroom
+      .fetchPreviousMessages(boardId, token)
       .then(json => this.formatMessages(json));
   };
 
   postMessage = () => {
-    const token = localStorage.getItem("token");
-    fetch("http://localhost:3000/api/v1/messages", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: token
-      },
-      method: "POST",
-      body: JSON.stringify({
-        content: this.state.value,
-        user_id: this.props.user.id,
-        board_id: this.props.board.id
-      })
-    });
+    const body = {
+      content: this.state.value,
+      user_id: this.props.user.id,
+      board_id: this.props.board.id
+    };
+    api.chatroom.postMessage(body);
   };
 
   componentDidUpdate() {

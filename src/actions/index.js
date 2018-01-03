@@ -75,7 +75,6 @@ export const getUsers = () => {
 };
 
 export const getBoards = () => {
-  const token = localStorage.getItem("token");
   return dispatch => {
     api.users.getBoards().then(user => {
       const boards = user.boards;

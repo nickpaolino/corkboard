@@ -87,6 +87,7 @@ const fetchMedia = boardId => {
 };
 
 const deleteMedia = id => {
+  console.log("in services", id);
   const jwt = localStorage.getItem("token");
   return fetch(`${url}media/${id}`, {
     method: "DELETE",
@@ -158,6 +159,28 @@ const addUsers = (boardId, users) => {
   }).then(res => res.json());
 };
 
+const fetchPreviousMessages = boardId => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}messages/${boardId}`, {
+    headers: {
+      Authorization: jwt
+    }
+  }).then(res => res.json());
+};
+
+const postMessage = body => {
+  const jwt = localStorage.getItem("token");
+  return fetch(`${url}messages`, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: jwt
+    },
+    method: "POST",
+    body: JSON.stringify(body)
+  });
+};
+
 export const api = {
   auth: {
     login,
@@ -180,5 +203,9 @@ export const api = {
     fetchMedia,
     deleteMedia,
     updateMediaContent
+  },
+  chatroom: {
+    fetchPreviousMessages,
+    postMessage
   }
 };

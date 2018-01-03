@@ -1,18 +1,17 @@
 import React, { Component } from "react";
-import * as actions from "../actions/auth";
 import { connect } from "react-redux";
-import withAuth from "../components/hocs/withAuth";
+import * as actions from "../../actions/auth";
+import withAuth from "../hocs/withAuth";
 import { Form, Button, Input } from "semantic-ui-react";
 import Draggable from "react-draggable";
-import "../login.css";
+import "../../login.css";
 
-class Signup extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      // The Rails backend params accepts a nested user object
-      user: {
+      fields: {
         username: "",
         password: ""
       }
@@ -21,8 +20,8 @@ class Signup extends Component {
 
   handleChange = e => {
     this.setState({
-      user: {
-        ...this.state.user,
+      fields: {
+        ...this.state.fields,
         [e.target.name]: e.target.value
       }
     });
@@ -30,11 +29,11 @@ class Signup extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.createUser();
+    this.authenticateUser();
   };
 
-  createUser = () => {
-    this.props.createUser(this.state, this.props.history);
+  authenticateUser = () => {
+    this.props.signInUser(this.state.fields, this.props.history);
   };
 
   handleClick = e => {
@@ -73,7 +72,7 @@ class Signup extends Component {
                       onClick={this.handleClick}
                     />
                   </Form.Field>
-                  <Button>Sign Up</Button>
+                  <Button>Login</Button>
                 </Form>
               </div>
             </div>
@@ -84,4 +83,4 @@ class Signup extends Component {
   }
 }
 
-export default withAuth(connect(null, actions)(Signup));
+export default withAuth(connect(null, actions)(Login));

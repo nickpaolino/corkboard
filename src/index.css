@@ -3,25 +3,16 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Ubuntu" !important;
 }
 
-/*.navbar {
-  font-family: "Ubuntu" !important;
-  background-color: rgba(228, 168, 29, 0.7) !important;
-  border-radius: 5px !important;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3) !important;
-}*/
-
-input[type="text"] {
-  font-family: "Ubuntu" !important;
-}
-
-button {
-  font-family: "Ubuntu" !important;
-}
-
-input[type="password"] {
+body,
+h1,
+h2,
+h3,
+h4,
+button,
+div,
+input {
   font-family: "Ubuntu" !important;
 }
 
@@ -37,4 +28,8 @@ input[type="password"] {
 .new.board {
   margin-left: 2%;
   overflow: visible;
+}
+
+.logo {
+  font-size: 20px;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Dropdown, Checkbox } from "semantic-ui-react";
+import { Form, Button, Dropdown } from "semantic-ui-react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import UserList from "../components/create/UserList";
