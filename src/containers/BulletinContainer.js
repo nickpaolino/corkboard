@@ -75,11 +75,13 @@ class BulletinContainer extends Component {
   };
 
   randomLeft = () => {
-    return Math.ceil(Math.random() * 480 + 20) + "px";
+    // return Math.ceil(Math.random() * 480 + 20) + "px";
+    return Math.ceil(Math.random() * 800 + 20) + "px";
   };
 
   randomTop = () => {
-    return Math.ceil(Math.random() * 200) + "px";
+    // return Math.ceil(Math.random() * 200) + "px";
+    return Math.ceil(Math.random() * 180) + "px";
   };
 
   handleDelete = id => {

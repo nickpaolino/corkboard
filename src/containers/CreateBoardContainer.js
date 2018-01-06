@@ -22,15 +22,16 @@ class CreateBoardContainer extends Component {
   componentDidMount = () => {
     this.props.getUsers();
 
-    const subjectOptions = this.props.subjects.map(subject => {
-      return {
-        key: subject,
-        value: subject,
-        text: subject
-      };
-    });
-
-    this.setState({ subjectOptions });
+    if (this.props.subjects) {
+      const subjectOptions = this.props.subjects.map(subject => {
+        return {
+          key: subject,
+          value: subject,
+          text: subject
+        };
+        this.setState({ subjectOptions });
+      });
+    }
   };
 
   addUser = users => {

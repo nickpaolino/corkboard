@@ -201,7 +201,7 @@ class Note extends Component {
 
   render() {
     if (this.state.deleted) {
-      this.style = { ...this.style, opacity: "0", pointerEvents: "none" };
+      this.style = { ...this.style, opacity: "0.0", pointerEvents: "none" };
     }
     return (
       <Draggable onStop={this.handleStop} bounds="parent">

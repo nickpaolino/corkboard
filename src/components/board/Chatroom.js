@@ -71,7 +71,9 @@ class Chatroom extends Component {
   }
 
   subscribeChannel = channel => {
-    const cable = ActionCable.createConsumer("ws://localhost:3000/cable");
+    const cable = ActionCable.createConsumer(
+      "ws://corkboard-backend.herokuapp.com/cable"
+    );
     const channelSubscription = cable.subscriptions.create(
       {
         channel: `RoomChannel`,
