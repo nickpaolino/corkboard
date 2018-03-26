@@ -15,7 +15,9 @@ class App extends Component {
         <Switch>
           {/* the profile container displays a user's boards and allows them to create a new one */}
           <Route exact path="/" component={ProfileContainer} />} />
+          {/* the login component allows a user to login - no access to Redux store */}
           <Route path="/login" component={Login} />
+          {/* the sign up component allows a user to sign up - no access to Redux store */}
           <Route path="/signup" component={Signup} />
           {/* the board container is the parent component for the board show and create page */}
           <Route path="/boards" component={BoardContainer} />

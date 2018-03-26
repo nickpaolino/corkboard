@@ -6,25 +6,32 @@ import { Modal, Button, Icon } from "semantic-ui-react";
 import "../home.css";
 import CreateBoardContainer from "./CreateBoardContainer";
 
+/* this component deals with the route at '/' and is responsible for rendering
+ a draggable board representation of all the user's boards as notes
+ the CreateBoardContainer is appropriated through this component as a modal */
+
 class ProfileContainer extends Component {
   state = {
+    // these notes are the user's boards
     notes: [],
-    reset: false,
+    // this state records if the CreateBoardContainer modal is open or not
     modalOpen: false
   };
 
   mapNotes = (notes, updatedBoard) => {
     if (notes) {
-      // updates notes' positions
-      this.setState({ notes: [...notes.notesList], reset: false });
+      // updates the notes' positions
+      this.setState({ notes: [...notes.notesList] });
     }
   };
 
   componentDidMount() {
+    // after the component mounts, check if the user's boards have been sent through the Redux store
     if (this.props.user.boards) {
+      // if they have, then map through each board and make it a note object
       const notes = this.props.user.boards.map(board => {
         const { id, subject, left_position, top_position } = board;
-        // each board is mapped into a note object structured for the note component
+        // these note objects are structured for the Note component
         return {
           id,
           caption: subject,
@@ -35,6 +42,7 @@ class ProfileContainer extends Component {
         };
       });
 
+      // set the state with these note objects
       this.setState({ notes });
     }
   }
@@ -70,6 +78,7 @@ class ProfileContainer extends Component {
   };
 
   render() {
+    console.log(this.props.user);
     return (
       <div>
         <div className="home">
@@ -77,9 +86,12 @@ class ProfileContainer extends Component {
           {/* the boards are passed down to the board component which renders them as notes */}
           <Board
             notes={this.state.notes}
+            // the mapNotes function resets the notes state
             mapNotes={this.mapNotes}
+            // the React Router history property is needed to access the current URL */}
             history={this.props.history}
           />
+          {/* the showModal function returns the modal if the state is set to open */}
           <div className="menu">{this.showModal()}</div>
         </div>
       </div>
@@ -89,6 +101,8 @@ class ProfileContainer extends Component {
 
 const mapStateToProps = state => {
   return {
+    // the current user is extracted from the Redux store
+    // this includes the user's boards and the entire subject list
     user: state.auth.currentUser
   };
 };
