@@ -1,4 +1,4 @@
-const url = "https://corkboard-backend.herokuapp.com/api/v1/";
+const url = "http://localhost:3000/api/v1/";
 
 const headers = {
   "Content-Type": "application/json",

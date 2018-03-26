@@ -19,6 +19,7 @@ class App extends Component {
           <Route path="/signup" component={Signup} />
           {/* the board container is the parent component for the board show and create page */}
           <Route path="/boards" component={BoardContainer} />
+          {/* the logout route logs a user out by clearing the redux store */}
           <Route
             path="/logout"
             render={props => {

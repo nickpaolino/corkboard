@@ -29,8 +29,9 @@ class CreateBoardContainer extends Component {
           value: subject,
           text: subject
         };
-        this.setState({ subjectOptions });
       });
+
+      this.setState({ subjectOptions });
     }
   };
 
