@@ -76,3 +76,10 @@
   align-self: center;
   align-content: center;
 }
+
+.validation {
+  border: solid;
+  border-color: red;
+  border-width: 2px;
+  border-radius: 2px;
+}

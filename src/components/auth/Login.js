@@ -6,19 +6,22 @@ import { Form, Button, Input } from "semantic-ui-react";
 import Draggable from "react-draggable";
 import "../../login.css";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
+/* The login component is responsible for producing a form for the user to login
+and setting the state in the Redux store if the user's login is successful.
+It connects to the Redux store to use signInUser action creator. It's wrapped in
+the withAuth hoc so that a logged in user visiting the login page is redirected. */
 
-    this.state = {
-      fields: {
-        username: "",
-        password: ""
-      }
-    };
-  }
+class Login extends Component {
+  state = {
+    // the fields state is in the same shape that the action creator expects
+    fields: {
+      username: "",
+      password: ""
+    }
+  };
 
   handleChange = e => {
+    // when any change is made to a field, update the relevant field in state
     this.setState({
       fields: {
         ...this.state.fields,
@@ -28,15 +31,19 @@ class Login extends Component {
   };
 
   handleSubmit = e => {
+    // when the form is submitted, prevent refresh
     e.preventDefault();
     this.authenticateUser();
   };
 
   authenticateUser = () => {
+    // this calls the action creator responsible for authenticating the user
+    // via an async request to the backend API to validate the auth
     this.props.signInUser(this.state.fields, this.props.history);
   };
 
   handleClick = e => {
+    // since the Login is a draggable component, this enables focus/select to work
     e.target.focus();
     e.target.select();
   };
@@ -44,6 +51,7 @@ class Login extends Component {
   render() {
     return (
       <div className="boundary">
+        {/* The draggable component's bounds are the parent div, boundary */}
         <Draggable bounds="parent">
           <div className="login">
             <div className="board">

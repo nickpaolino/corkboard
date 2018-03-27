@@ -6,9 +6,10 @@ import { Modal, Button, Icon } from "semantic-ui-react";
 import "../home.css";
 import CreateBoardContainer from "./CreateBoardContainer";
 
-/* this component deals with the route at '/' and is responsible for rendering
- a draggable board representation of all the user's boards as notes
- the CreateBoardContainer is appropriated through this component as a modal */
+/* This component deals with the route at '/' and is responsible for rendering
+ a draggable board representation of all the user's boards as notes.
+ The CreateBoardContainer is appropriated through this component as a modal.
+ It reads from the Redux store and is wrapped in the withAuth hoc */
 
 class ProfileContainer extends Component {
   state = {
@@ -78,7 +79,6 @@ class ProfileContainer extends Component {
   };
 
   render() {
-    console.log(this.props.user);
     return (
       <div>
         <div className="home">
