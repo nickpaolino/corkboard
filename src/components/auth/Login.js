@@ -42,6 +42,15 @@ class Login extends Component {
     this.props.signInUser(this.state.fields, this.props.history);
   };
 
+  handleGuestLogin = () => {
+    const guestObj = {
+      username: "Guest",
+      password: "Guest"
+    };
+
+    this.props.signInUser(guestObj, this.props.history);
+  };
+
   handleClick = e => {
     // since the Login is a draggable component, this enables focus/select to work
     e.target.focus();
@@ -81,6 +90,11 @@ class Login extends Component {
                     />
                   </Form.Field>
                   <Button>Login</Button>
+                  <br />
+                  <br />
+                  <Button onClick={this.handleGuestLogin}>
+                    Sign-in as Guest
+                  </Button>
                 </Form>
               </div>
             </div>
