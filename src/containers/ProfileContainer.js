@@ -38,7 +38,7 @@ class ProfileContainer extends Component {
           caption: subject,
           left_position,
           top_position,
-          link: `http://localhost:3001/boards/${id}`,
+          link: `http://corkboard.surge.sh/boards/${id}`,
           isBoard: true
         };
       });
