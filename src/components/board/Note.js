@@ -6,16 +6,23 @@ import { api } from "../../services/api";
 import * as actions from "../../actions/boards";
 import "../../Board.css";
 
+/* This component represents an individual note on either a resource-sharing board
+or on the user's profile page. The note component is rendered through the Board component
+from the BulletinContainer. To update a note, its movement is registered here and the
+updates sent through the Board component to the API. */
+
 class Note extends Component {
   constructor(props) {
     super(props);
 
+    // before all else, determine the note's position and set on the class
     this.style = {
       left: this.props.left,
       top: this.props.top
     };
 
     this.state = {
+      // records if the note's been deleted in the BulletinContainer & API
       deleted: false,
       movedNotes: [],
       editable: !this.props.text,
@@ -26,9 +33,15 @@ class Note extends Component {
   }
 
   handleDelete = () => {
+    /* sets the state to tell this note component that it's been deleted
+    since the board is optimistically rendered, the component can't be deleted so
+    the opacity is set to 0 until a refresh when the note is officially removed by
+    not being re-rendered */
     this.setState({
       deleted: true
     });
+
+    // this calls BulletinContainer's delete function to send a destroy request to the API
     this.props.handleDelete(this.props.id);
   };
 
@@ -62,17 +75,29 @@ class Note extends Component {
     };
   };
 
+  // this function is called when the user stops dragging a note
   handleStop = e => {
+    // if the user's not clicked on the delete button
     if (e.target.className !== "delete icon") {
       this.deleted = false;
-      let style = this.style;
+
+      // take the style properties that were set in the constructor
+      let { style } = this;
+
+      // extracts the px transform that the user initiated by moving the note
       let transform = this.extractTransform(this.noteDiv.style.transform);
+
+      // with these transform numbers known, it creates a new style for the note instance
       this.createNewStyle(style, transform);
+
+      // calls the Board component's function to update the note in the API
       this.props.updateNote({
         ...this.transformedStyle,
         id: this.props.id,
         isBoard: this.props.isBoard
       });
+
+      // if the note has been moved, it adds it to the array of moved notes in the state
       if (!this.state.movedNotes.includes(this.props.id)) {
         this.setState({
           movedNotes: [...this.state.movedNotes, this.props.id]
@@ -81,6 +106,7 @@ class Note extends Component {
     }
   };
 
+  // since draggable interferes with the natural flow of css, the div has to be focused/selected
   componentDidUpdate() {
     this.focusAndSelect();
   }
@@ -103,12 +129,14 @@ class Note extends Component {
     e.target.select();
   };
 
+  // when the note is edited, the editable state is set to true which allows text to be typed
   handleEdit = e => {
     this.setState({
       editable: true
     });
   };
 
+  // on enter, the note's text is locked, updated, and the new value is represented
   handleKeyPress = e => {
     if (e.key === "Enter") {
       // Persist to database here
@@ -120,15 +148,19 @@ class Note extends Component {
     }
   };
 
+  // updates the note's caption and/or link in the database
   updateNote = (caption, link) => {
     const body = { caption, link };
     api.media.updateMediaContent(body, this.props.id);
   };
 
+  // handles the link modal's opening
   handleOpen = () => this.setState({ modalOpen: true });
 
+  // handles the link modal's closing
   handleClose = () => this.setState({ modalOpen: false });
 
+  // this function is triggered when the add link button is clicked
   addLink = () => {
     this.handleClose();
     // Add link here
@@ -137,12 +169,14 @@ class Note extends Component {
     this.setState({ link });
   };
 
+  // this function is triggered when the remove link button is clicked
   handleLinkRemove = () => {
     this.updateNote(this.state.value, "");
     this.setState({ link: "" });
     this.handleClose();
   };
 
+  // this deals with the links on a user's profile board notes
   handleRedirect = () => {
     this.props.getBoard(this.props.id, this.props.history);
   };
