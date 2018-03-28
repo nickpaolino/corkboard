@@ -181,6 +181,7 @@ class Note extends Component {
     this.props.getBoard(this.props.id, this.props.history);
   };
 
+  // this shows the modal for creating, updating, or deleting a note's link
   modalLink = () => {
     return (
       <Modal
@@ -234,17 +235,22 @@ class Note extends Component {
   };
 
   render() {
+    // since the BulletinContainer doesn't re-render the notes until refresh, a deleted note
+    // is made invisible through 0 opacity and null pointerEvents until the notes are re-rendered
     if (this.state.deleted) {
       this.style = { ...this.style, opacity: "0.0", pointerEvents: "none" };
     }
     return (
       <Draggable onStop={this.handleStop} bounds="parent">
+        {/* a draggable's bounds are limited to its parent div */}
         <div
           className="note"
           onChange={this.handleChange}
           ref={div => (this.noteDiv = div)}
           style={this.style}
         >
+          {/* if this note instance is a board representation on the user's profile,
+              then don't show the icons that are used on a typical note */}
           {this.props.isBoard ? (
             ""
           ) : (
@@ -271,6 +277,7 @@ class Note extends Component {
             }
             onClick={this.props.isBoard ? this.handleRedirect : null}
           >
+            {/* these css customizations enable a draggable component to have editable text area */}
             <textarea
               maxLength="65"
               onClick={this.handleClick}
@@ -302,6 +309,8 @@ class Note extends Component {
   }
 }
 
+// the currentBoard that this note belongs to along with a boolean
+// reflecting if the board's been fetched is mapped from the Redux store to props
 const mapStateToProps = state => {
   return {
     board: state.board.currentBoard,
